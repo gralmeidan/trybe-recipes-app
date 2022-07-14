@@ -1,4 +1,4 @@
-export default cocktaildbResponse = {
+const cocktaildbResponse = {
   "drinks": [
       {
           "idDrink": "15997",
@@ -1327,3 +1327,5 @@ export default cocktaildbResponse = {
       }
   ]
 }
+
+export default cocktaildbResponse

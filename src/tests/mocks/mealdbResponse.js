@@ -1,4 +1,4 @@
-export default mealdbResponse = {
+const mealdbResponse = {
   "meals": [
       {
           "idMeal": "52977",
@@ -1377,3 +1377,5 @@ export default mealdbResponse = {
       }
   ]
 }
+
+export default mealdbResponse
