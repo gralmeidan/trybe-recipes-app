@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import fetchRecipes from '../../services/api';
+import BasicCard from '../../components/BasicCard/BasicCard';
 
 function Recipes({ location: { pathname } }) {
   const [recipes, setRecipes] = useState([]);
@@ -8,7 +9,6 @@ function Recipes({ location: { pathname } }) {
   useEffect(() => {
     const getRecipes = async () => {
       const db = pathname === '/foods' ? 'meal' : 'cocktail';
-      console.log(db);
       const response = await fetchRecipes(db, '');
       setRecipes(response);
     };
@@ -17,9 +17,14 @@ function Recipes({ location: { pathname } }) {
 
   return (
     <div>
-      Recipes
-      {' '}
-      { pathname }
+      { recipes.length > 0 && recipes.map((recipe, i) => (
+        <BasicCard
+          { ...recipe }
+          index={ i }
+          pathname={ pathname }
+          key={ i }
+        />
+      ))}
     </div>
   );
 }
