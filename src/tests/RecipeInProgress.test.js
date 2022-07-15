@@ -41,16 +41,64 @@ describe("Testa a tela de receitas", () => {
     const { history } = renderWithRouter(<App />);
     history.push("/foods/52977/in-progress");
     
+    window.document.execCommand = jest.fn(() => true)
+
+    let button;
     await waitFor(() => {
-      expect(fetch).toHaveBeenCalledWith(MEALBYID_REQUEST_URL)
+      button = screen.getByTestId('share-btn')
+    })
+    act(() => {
+      userEvent.click(button)
+    })
+    await waitFor(() => {
+      expect(window.document.execCommand).toHaveBeenCalledWith('copy')
     })
 
     history.push("/drinks/15997/in-progress");
     
     await waitFor(() => {
-      expect(fetch).toHaveBeenCalledWith(DRINKBYID_REQUEST_URL)
+      button = screen.getByTestId('share-btn')
+    })
+    act(() => {
+      userEvent.click(button)
+    })
+    await waitFor(() => {
+      expect(window.document.execCommand).toHaveBeenCalledWith('copy')
     })
   });
 
+  it('Deve haver um botão de favoritar receita', async () => {
+    const { history } = renderWithRouter(<App />);
+    history.push("/foods/52977/in-progress");
+    
+    const FILLED = 'blackHeartIcon'
+    const OUTLINE = 'whiteHeartIcon'
 
+    let button;
+    await waitFor(() => {
+      button = screen.getByTestId('favorite-btn')
+    })
+    expect(button.firstChild.src).toMatch(new RegExp(OUTLINE, 'i'))
+    act(() => {
+      userEvent.click(button)
+    })
+    expect(button.firstChild.src).toMatch(new RegExp(FILLED, 'i'))
+
+    history.push("/drinks/15997/in-progress");
+    await waitFor(() => {
+      button = screen.getByTestId('favorite-btn')
+    })
+    expect(button.firstChild.src).toMatch(new RegExp(OUTLINE, 'i'))
+    act(() => {
+      userEvent.click(button)
+    })
+    expect(button.firstChild.src).toMatch(new RegExp(FILLED, 'i'))
+
+    history.push("/foods/52977/in-progress");
+    await waitFor(() => {
+      button = screen.getByTestId('favorite-btn')
+    })
+    expect(button.firstChild.src).toMatch(new RegExp(FILLED, 'i'))
+
+  })
 });
