@@ -6,7 +6,7 @@ export const MEALDB_REQUEST_URL = 'https://www.themealdb.com/api/json/v1/1/searc
 export const COCKTAILDB_REQUEST_URL = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s='
 
 
-export const MEALDB_CATEGORIES_REQUEST_URL = 'https://www.themealdb.com/api/json/v1/1/categories.php';
+export const MEALDB_CATEGORIES_REQUEST_URL = 'https://www.themealdb.com/api/json/v1/1/list.php?c=list';
 export const COCKTAILDB_CATEGORIES_REQUEST_URL = 'https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list';
 
 const mockFetch = (url) => Promise.resolve({

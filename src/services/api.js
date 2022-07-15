@@ -10,15 +10,14 @@ const fetchRecipes = async (type, query = '') => {
 };
 
 export const fetchCategories = async (type) => {
-  const URLs = {
-    meal: 'https://www.themealdb.com/api/json/v1/1/categories.php',
-    cocktail: 'https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list',
-  };
-  return fetch(URLs[type])
+  const URL = `https://www.the${type}db.com/api/json/v1/1/list.php?c=list`;
+  const LIMIT = 5;
+  return fetch(URL)
     .then((data) => data.json())
     .then(
-      ({ [type === 'meal' ? 'categories' : 'drinks']: response }) => response,
+      (obj) => Object.values(obj)[0],
     )
+    .then((arr) => arr.slice(0, LIMIT))
     .catch(console.error);
 };
 

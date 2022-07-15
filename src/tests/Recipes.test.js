@@ -6,6 +6,7 @@ import mockFetch, {
   COCKTAILDB_REQUEST_URL,
   MEALDB_REQUEST_URL,
 } from "./mocks/fetch";
+import { cocktaildbCategories, mealdbCategories } from "./mocks/categoriesResponse";
 
 describe("Testa a tela de receitas", () => {
   beforeEach(() => {
@@ -39,4 +40,26 @@ describe("Testa a tela de receitas", () => {
       expect(fetch).toHaveBeenCalledWith(COCKTAILDB_REQUEST_URL)
     );
   });
+
+  it('Deve mostrar as 5 primeiras categorias da database correta', async () => {
+    const { history } = renderWithRouter(<App />);
+    history.push("/foods");
+
+    await waitFor(() => {
+      const categories = screen.getAllByTestId(/-category-filter$/i);
+      expect(categories).toHaveLength(5)
+      categories.forEach(({ textContent }, i) => {
+        expect(textContent).toBe(mealdbCategories.categories[i].strCategory)
+      })
+    });
+    history.push("/drinks");
+
+    await waitFor(() =>{
+      const categories = screen.getAllByTestId(/-category-filter$/i);
+      expect(categories).toHaveLength(5)
+      categories.forEach(({ textContent }, i) => {
+        expect(textContent).toBe(cocktaildbCategories.drinks[i].strCategory)
+      })
+    });
+  })
 });

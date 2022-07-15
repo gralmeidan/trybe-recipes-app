@@ -20,6 +20,20 @@ function Recipes({ location: { pathname } }) {
 
   return (
     <div>
+      { categories?.length > 0 && categories.map(({ strCategory }, i) => (
+        <label
+          key={ i }
+          htmlFor={ `${strCategory}-category-filter` }
+          data-testid={ `${strCategory}-category-filter` }
+        >
+          {strCategory}
+          <input
+            type="radio"
+            name="category"
+            id={ `${strCategory}-category-filter` }
+          />
+        </label>
+      ))}
       { recipes.length > 0 && recipes.map((recipe, i) => (
         <BasicCard
           { ...recipe }
