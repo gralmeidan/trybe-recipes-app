@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 function BasicCard(props) {
   const { pathname, index } = props;
@@ -7,14 +8,16 @@ function BasicCard(props) {
   const {
     [`str${type}Thumb`]: img,
     [`str${type}`]: title,
+    [`id${type}`]: id,
   } = props;
 
   return (
-    <div
+    <Link
       data-testid={ `${index}-recipe-card` }
       style={ {
         display: 'flex',
       } }
+      to={ `${pathname}/${id}` }
     >
       <img
         data-testid={ `${index}-card-img` }
@@ -27,7 +30,7 @@ function BasicCard(props) {
       >
         {title}
       </p>
-    </div>
+    </Link>
   );
 }
 

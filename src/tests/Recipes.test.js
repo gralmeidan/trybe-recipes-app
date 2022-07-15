@@ -11,6 +11,7 @@ import { cocktaildbCategories, mealdbCategories } from "./mocks/categoriesRespon
 import beefMeals from "../../cypress/mocks/beefMeals";
 import { act } from "react-dom/test-utils";
 import mealdbResponse from "./mocks/mealdbResponse";
+import cocktaildbResponse from "./mocks/cocktaildbResponse";
 
 describe("Testa a tela de receitas", () => {
   beforeEach(() => {
@@ -121,5 +122,28 @@ describe("Testa a tela de receitas", () => {
         expect(textContent).toBe(mealdbResponse.meals[i].strMeal)
       })    
     });
+  })
+
+  it('Clicar em um card redireciona o usuário para a página de detalhes', async () => {
+    const { 
+      history,
+    } = renderWithRouter(<App />);
+    history.push("/foods");
+    await waitFor(() => {
+      expect(screen.getAllByTestId(/-recipe-card$/i)).toHaveLength(12);
+    });
+
+    userEvent.click(screen.getByTestId(/^0-recipe-card/i))
+    const { idMeal } = mealdbResponse.meals[0]
+    expect(history.location.pathname).toBe(`/foods/${idMeal}`)
+    
+    history.push("/drinks");
+    await waitFor(() => {
+      expect(screen.getAllByTestId(/-recipe-card$/i)).toHaveLength(12);
+    });
+
+    userEvent.click(screen.getByTestId(/^0-recipe-card/i))
+    const { idDrink } = cocktaildbResponse.drinks[0]
+    expect(history.location.pathname).toBe(`/drinks/${idDrink}`)
   })
 });
