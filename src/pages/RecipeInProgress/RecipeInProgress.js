@@ -32,6 +32,14 @@ function RecipeInProgress({ match: { params: { id }, path } }) {
     getRecipe();
   }, [id, path]);
 
+  const handleIngredientCheck = ({ target }) => {
+    const value = target.checked;
+    target
+      .parentElement
+      .style
+      .textDecoration = value ? 'line-through' : 'initial';
+  };
+
   return !recipe ? null : (
     <div>
       <ShareButton />
@@ -39,7 +47,16 @@ function RecipeInProgress({ match: { params: { id }, path } }) {
         info={ recipe }
         id={ path.includes('food') ? recipe.idMeal : recipe.idDrink }
       />
-      <RecipeInfo recipe={ recipe } />
+      <RecipeInfo
+        recipe={ recipe }
+        handleChange={ handleIngredientCheck }
+      />
+      <button
+        data-testid="finish-recipe-btn"
+        type="button"
+      >
+        Finalizar
+      </button>
     </div>
   );
 }
