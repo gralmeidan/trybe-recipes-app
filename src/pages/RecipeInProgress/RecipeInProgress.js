@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import getFood from '../../services/getFoodAPI';
-import getDrink from '../../services/getDrinkAPI';
+import getRecipeAPI from '../../services/getRecipeAPI';
 import ShareButton from '../../components/ShareButton';
 import FavoriteButton from '../../components/FavoriteButton';
 
@@ -9,11 +8,12 @@ function RecipeInProgress({ match: { params: { id }, path } }) {
   const [recipe, setRecipe] = useState({});
 
   useEffect(() => {
-    const getRecipe = async (callback) => {
-      const response = await callback(id);
-      setRecipe(response.drinks ? response.drinks[0] : response);
+    const getRecipe = async () => {
+      const type = path.includes('food') ? 'meal' : 'cocktail';
+      const response = await getRecipeAPI(type, id);
+      setRecipe(response);
     };
-    getRecipe(path.includes('food') ? getFood : getDrink);
+    getRecipe();
   }, [id, path]);
 
   return recipe && (
