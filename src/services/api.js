@@ -9,4 +9,17 @@ const fetchRecipes = async (type, query = '') => {
     .catch(console.error);
 };
 
+export const fetchCategories = async (type) => {
+  const URLs = {
+    meal: 'https://www.themealdb.com/api/json/v1/1/categories.php',
+    cocktail: 'https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list',
+  };
+  return fetch(URLs[type])
+    .then((data) => data.json())
+    .then(
+      ({ [type === 'meal' ? 'categories' : 'drinks']: response }) => response,
+    )
+    .catch(console.error);
+};
+
 export default fetchRecipes;

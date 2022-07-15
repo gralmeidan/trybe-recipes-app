@@ -1,16 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import fetchRecipes from '../../services/api';
+import fetchRecipes, { fetchCategories } from '../../services/api';
 import BasicCard from '../../components/BasicCard/BasicCard';
 
 function Recipes({ location: { pathname } }) {
   const [recipes, setRecipes] = useState([]);
+  const [categories, setCategories] = useState([]);
 
   useEffect(() => {
     const getRecipes = async () => {
       const db = pathname === '/foods' ? 'meal' : 'cocktail';
-      const response = await fetchRecipes(db, '');
+      let response = await fetchRecipes(db);
       setRecipes(response);
+      response = await fetchCategories(db);
+      setCategories(response);
     };
     getRecipes();
   }, [pathname]);
