@@ -1,5 +1,7 @@
-const fetchRecipes = async (type, query = '') => {
-  const URL = `https://www.the${type}db.com/api/json/v1/1/search.php?s=${query}`;
+const fetchRecipes = async (type, query = '', category) => {
+  const URL = !category
+    ? `https://www.the${type}db.com/api/json/v1/1/search.php?s=${query}`
+    : `https://www.the${type}db.com/api/json/v1/1/filter.php?c=${category}`;
   const LIMIT = 12;
   return fetch(URL)
     .then((data) => data.json())

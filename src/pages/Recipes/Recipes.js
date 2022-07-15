@@ -20,7 +20,7 @@ function Recipes({ location: { pathname } }) {
 
   return (
     <div>
-      { categories?.length > 0 && categories.map(({ strCategory }, i) => (
+      { categories.length > 0 && categories.map(({ strCategory }, i) => (
         <label
           key={ i }
           htmlFor={ `${strCategory}-category-filter` }
