@@ -7,22 +7,26 @@ import searchIcon from '../../images/searchIcon.svg';
 
 const Header = ({ title }) => (
   <header>
-    <div>
+    <div id="header-profile">
       <Link to="/profile">
-        <span data-testid="profile-top-btn">
-          <img src={ profileIcon } alt="Profile" />
-        </span>
+        <img
+          src={ profileIcon }
+          alt="Profile"
+          data-testid="profile-top-btn"
+        />
       </Link>
     </div>
-    <div>
+    <div id="header-title">
       <h1 data-testid="page-title">
         { title }
       </h1>
     </div>
-    <div>
-      <span data-testid="search-top-btn">
-        <img src={ searchIcon } alt="Search Recipes" />
-      </span>
+    <div id="header-search">
+      <img
+        src={ searchIcon }
+        alt="Search Recipes"
+        data-testid="search-top-btn"
+      />
     </div>
   </header>
 );
