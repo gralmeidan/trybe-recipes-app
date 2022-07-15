@@ -2,11 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 function RecipeInfo({ recipe }) {
-  const { isDetails, isFood, photo,
+  const { isDetails, isFood, img,
     title, category, instructions, ingredients, video } = recipe;
   return (
     <div className="recipeInfos">
-      <img src={ photo } alt="recipePhoto" data-testid="recipe-photo" />
+      <img src={ img } alt="recipePhoto" data-testid="recipe-photo" />
       <h2 data-testid="recipe-title">
         {title}
       </h2>
@@ -38,7 +38,11 @@ function RecipeInfo({ recipe }) {
 
       <p data-testid="instructions">{instructions}</p>
       {isFood ? (
-        <video src={ video } controls>
+        <video
+          src={ video }
+          data-testid="video"
+          controls
+        >
           <track
             default
             kind="captions"
@@ -54,7 +58,7 @@ RecipeInfo.propTypes = {
   recipe: PropTypes.shape({
     isDetails: PropTypes.bool.isRequired,
     isFood: PropTypes.bool.isRequired,
-    photo: PropTypes.string.isRequired,
+    img: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
     category: PropTypes.string.isRequired,
     instructions: PropTypes.string.isRequired,

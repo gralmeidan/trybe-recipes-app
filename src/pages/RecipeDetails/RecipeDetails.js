@@ -1,63 +1,79 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import getFood from '../../services/getFoodAPI';
-import getDrink from '../../services/getDrinkAPI';
 import RecipeInfo from '../../components/RecipeInfo/RecipeInfo';
 import getIngredientAndMeasureList from '../../helpers/getIngredientAndMeasureList';
+import getRecipeAPI from '../../services/getRecipeAPI';
+import getRecomendationApi from '../../services/getRecomendationsAPi';
+import BasicCard from '../../components/BasicCard/BasicCard';
 
 function RecipeDetails({ match: { params: { id }, path } }) {
-  const [recipe, setRecipe] = useContext({});
+  const [recipe, setRecipe] = useState();
+  const [basicCards, setBasicCards] = useState();
 
   useEffect(() => {
-    if (path.includes('foods')) {
-      const foodRecipe = getFood(id);
-      const ingredients = getIngredientAndMeasureList(foodRecipe);
-      const { strCategory: category,
-        strMeal: title, strMealThumb: photo,
-        strYoutube: video,
+    const getRecipe = async () => {
+      const type = path.includes('foods') ? 'meal' : 'cocktail';
+      const result = path.includes('foods') ? 'meals' : 'drinks';
+
+      const recipeObj = await getRecipeAPI(type, id, result);
+      const ingredients = getIngredientAndMeasureList(recipeObj);
+
+      const strType = path.includes('foods') ? 'Meal' : 'Drink';
+      const strCategory = path.includes('foods') ? 'Category' : 'Alcoholic';
+      const {
+        [`str${strType}`]: title,
+        [`str${strType}Thumb`]: img,
         strInstructions: instructions,
-      } = foodRecipe;
+        [`str${strCategory}`]: category,
+        strYoutube: video,
+      } = recipeObj;
+
       setRecipe({
         isDetails: true,
-        isFood: true,
-        photo,
+        isFood: path.includes('foods'),
         title,
+        img,
         category,
         instructions,
         video,
         ingredients });
-    }
-    if (path.includes('drinks')) {
-      const drinkRecipe = getDrink(id);
-      const ingredients = getIngredientAndMeasureList(drinkRecipe);
-      const { strAlcoholic: category,
-        strDrink: title, strDrinkThumb: photo,
-        strInstructions: instructions,
-      } = drinkRecipe;
-      setRecipe({
-        isDetails: true,
-        isFood: false,
-        photo,
-        title,
-        category,
-        instructions,
-        ingredients });
-    }
-  }, [id, path, setRecipe]);
+    };
+    getRecipe();
+  }, []);
+
+  useEffect(() => {
+    const getRecomendation = async () => {
+      const type = path.includes('foods') ? 'cocktail' : 'meal';
+      const result = path.includes('foods') ? 'drinks' : 'meals';
+      const recomendation = await getRecomendationApi(type, result);
+      setBasicCards(recomendation);
+    };
+    getRecomendation();
+  }, []);
 
   return (
     <section>
-      <RecipeInfo recipe={ recipe } />
-      <BasicCard data-testid={ `${index}-recomendation-card` } />
-      {isDone ? (
+      {recipe && <RecipeInfo recipe={ recipe } />}
+      <div>
+        {basicCards && basicCards.map((basicCard, index) => (
+          <div key={ index } data-testid={ `${index}-recomendation-card` }>
+            <BasicCard
+              pathname={ path }
+              index={ index }
+              { ...basicCard }
+            />
+          </div>
+        ))}
+      </div>
+      {/* {isDone ? (
         <div className="start-recipe-btn">
-        <button
-          type="button"
-          data-testid="start-recipe-btn"
-        >
-          Start Recipe
-        </button>
-      </div>) : }
+          <button
+            type="button"
+            data-testid="start-recipe-btn"
+          >
+            Start Recipe
+          </button>
+        </div>) : null } */}
     </section>
   );
 }
