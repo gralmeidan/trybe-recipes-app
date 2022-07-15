@@ -9,25 +9,56 @@ function RecipeDetails({ match: { params: { id }, path } }) {
   const [recipe, setRecipe] = useContext({});
 
   useEffect(() => {
-    // const info = {};
     if (path.includes('foods')) {
       const foodRecipe = getFood(id);
       const ingredients = getIngredientAndMeasureList(foodRecipe);
       const { strCategory: category,
         strMeal: title, strMealThumb: photo,
         strYoutube: video,
-      } = info;
-      setRecipe({ isFood: true, photo, title, category, video, ingredients });
+        strInstructions: instructions,
+      } = foodRecipe;
+      setRecipe({
+        isDetails: true,
+        isFood: true,
+        photo,
+        title,
+        category,
+        instructions,
+        video,
+        ingredients });
     }
     if (path.includes('drinks')) {
-      setRecipe(getDrink(id));
+      const drinkRecipe = getDrink(id);
+      const ingredients = getIngredientAndMeasureList(drinkRecipe);
+      const { strAlcoholic: category,
+        strDrink: title, strDrinkThumb: photo,
+        strInstructions: instructions,
+      } = drinkRecipe;
+      setRecipe({
+        isDetails: true,
+        isFood: false,
+        photo,
+        title,
+        category,
+        instructions,
+        ingredients });
     }
-  }, []);
+  }, [id, path, setRecipe]);
 
   return (
-    <div>
+    <section>
       <RecipeInfo recipe={ recipe } />
-    </div>
+      <BasicCard data-testid={ `${index}-recomendation-card` } />
+      {isDone ? (
+        <div className="start-recipe-btn">
+        <button
+          type="button"
+          data-testid="start-recipe-btn"
+        >
+          Start Recipe
+        </button>
+      </div>) : }
+    </section>
   );
 }
 
