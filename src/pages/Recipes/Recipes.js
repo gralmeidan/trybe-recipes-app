@@ -2,11 +2,13 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import fetchRecipes, { fetchCategories } from '../../services/api';
 import BasicCard from '../../components/BasicCard/BasicCard';
+import Header from '../../components';
 
 function Recipes({ location: { pathname } }) {
   const [recipes, setRecipes] = useState([]);
   const [categories, setCategories] = useState([]);
   const [category, setCategory] = useState();
+  const headerTitle = 'Food/Drinks Recipes';
 
   useEffect(() => {
     const getRecipes = async () => {
@@ -32,6 +34,7 @@ function Recipes({ location: { pathname } }) {
 
   return (
     <div>
+      <Header title={ headerTitle } />
       { categories.length > 0 && categories.map(({ strCategory }, i) => (
         <label
           key={ i }

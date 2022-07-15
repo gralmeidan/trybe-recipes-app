@@ -1,11 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import Context from './Context';
 
 function Provider({ children }) {
+  const contextValue = {};
+
   return (
-    <Context.Provider value={ {} }>
-      {children}
+    <Context.Provider value={ contextValue }>
+      { children }
     </Context.Provider>
   );
 }
