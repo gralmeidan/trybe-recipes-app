@@ -10,6 +10,7 @@ import mockFetch, {
 import { cocktaildbCategories, mealdbCategories } from "./mocks/categoriesResponse";
 import beefMeals from "../../cypress/mocks/beefMeals";
 import { act } from "react-dom/test-utils";
+import mealdbResponse from "./mocks/mealdbResponse";
 
 describe("Testa a tela de receitas", () => {
   beforeEach(() => {
@@ -49,7 +50,7 @@ describe("Testa a tela de receitas", () => {
     history.push("/foods");
 
     await waitFor(() => {
-      const categories = screen.getAllByTestId(/-category-filter$/i);
+      const categories = screen.getAllByTestId(/(?<!All)-category-filter/i);
       expect(categories).toHaveLength(5)
       categories.forEach(({ textContent }, i) => {
         expect(textContent).toBe(mealdbCategories.categories[i].strCategory)
@@ -58,7 +59,7 @@ describe("Testa a tela de receitas", () => {
     history.push("/drinks");
 
     await waitFor(() =>{
-      const categories = screen.getAllByTestId(/-category-filter$/i);
+      const categories = screen.getAllByTestId(/(?<!All)-category-filter/i);
       expect(categories).toHaveLength(5)
       categories.forEach(({ textContent }, i) => {
         expect(textContent).toBe(cocktaildbCategories.drinks[i].strCategory)
@@ -82,6 +83,43 @@ describe("Testa a tela de receitas", () => {
         expect(textContent).toBe(beefMeals.meals[i].strMeal)
       })    
     });
-   
+  
+    act(() => {
+      userEvent.click(screen.getByTestId(/all-category-filter/i))
+    })
+
+    await waitFor(() => {
+      screen.getAllByTestId(/-card-name$/i).forEach(({ textContent }, i) => {
+        expect(textContent).toBe(mealdbResponse.meals[i].strMeal)
+      })    
+    });
+  })
+
+  it('Clicar no filtra outra vez deve desselecionar o filtro', async () => {
+    const { history } = renderWithRouter(<App />);
+    history.push("/foods");
+    await waitFor(() => {
+      expect(screen.getAllByTestId(/-recipe-card$/i)).toHaveLength(12);
+    });
+
+    act(() => {
+      userEvent.click(screen.getByTestId(/beef-category-filter/i))
+    })
+
+    await waitFor(() => {
+      screen.getAllByTestId(/-card-name$/i).forEach(({ textContent }, i) => {
+        expect(textContent).toBe(beefMeals.meals[i].strMeal)
+      })    
+    });
+  
+    act(() => {
+      userEvent.click(screen.getByTestId(/beef-category-filter/i))
+    })
+
+    await waitFor(() => {
+      screen.getAllByTestId(/-card-name$/i).forEach(({ textContent }, i) => {
+        expect(textContent).toBe(mealdbResponse.meals[i].strMeal)
+      })    
+    });
   })
 });

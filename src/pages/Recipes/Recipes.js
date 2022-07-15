@@ -19,6 +19,17 @@ function Recipes({ location: { pathname } }) {
     getRecipes();
   }, [pathname, category]);
 
+  const handleCategoryChange = ({ target }) => {
+    const { value } = target;
+    setCategory((prev) => {
+      if (value === prev) {
+        target.checked = false;
+        return undefined;
+      }
+      return value;
+    });
+  };
+
   return (
     <div>
       { categories.length > 0 && categories.map(({ strCategory }, i) => (
@@ -29,7 +40,7 @@ function Recipes({ location: { pathname } }) {
         >
           {strCategory}
           <input
-            onClick={ ({ target: { value } }) => setCategory(value) }
+            onClick={ handleCategoryChange }
             type="radio"
             name="category"
             value={ strCategory }

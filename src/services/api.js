@@ -1,5 +1,5 @@
 const fetchRecipes = async (type, query, category) => {
-  const URL = !category
+  const URL = !category || category === 'All'
     ? `https://www.the${type}db.com/api/json/v1/1/search.php?s=${query}`
     : `https://www.the${type}db.com/api/json/v1/1/filter.php?c=${category}`;
   const LIMIT = 12;
@@ -20,6 +20,9 @@ export const fetchCategories = async (type) => {
       (obj) => Object.values(obj)[0],
     )
     .then((arr) => arr.slice(0, LIMIT))
+    .then((arr) => [...arr, {
+      strCategory: 'All',
+    }])
     .catch(console.error);
 };
 
