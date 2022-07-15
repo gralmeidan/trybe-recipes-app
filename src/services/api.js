@@ -1,4 +1,4 @@
-const fetchRecipes = async (type, query = '', category) => {
+const fetchRecipes = async (type, query, category) => {
   const URL = !category
     ? `https://www.the${type}db.com/api/json/v1/1/search.php?s=${query}`
     : `https://www.the${type}db.com/api/json/v1/1/filter.php?c=${category}`;

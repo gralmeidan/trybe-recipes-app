@@ -1,5 +1,6 @@
 import React from "react";
 import { screen, waitFor } from "@testing-library/react";
+import userEvent from '@testing-library/user-event'
 import App from "../App";
 import renderWithRouter from "./helpers/renderWithRouter";
 import mockFetch, {
@@ -7,6 +8,8 @@ import mockFetch, {
   MEALDB_REQUEST_URL,
 } from "./mocks/fetch";
 import { cocktaildbCategories, mealdbCategories } from "./mocks/categoriesResponse";
+import beefMeals from "../../cypress/mocks/beefMeals";
+import { act } from "react-dom/test-utils";
 
 describe("Testa a tela de receitas", () => {
   beforeEach(() => {
@@ -61,5 +64,24 @@ describe("Testa a tela de receitas", () => {
         expect(textContent).toBe(cocktaildbCategories.drinks[i].strCategory)
       })
     });
+  })
+
+  it('Deve retornar as 12 primeiras receitas da categoria correta', async () => {
+    const { history } = renderWithRouter(<App />);
+    history.push("/foods");
+    await waitFor(() => {
+      expect(screen.getAllByTestId(/-recipe-card$/i)).toHaveLength(12);
+    });
+
+    act(() => {
+      userEvent.click(screen.getByTestId(/beef-category-filter/i))
+    })
+
+    await waitFor(() => {
+      screen.getAllByTestId(/-card-name$/i).forEach(({ textContent }, i) => {
+        expect(textContent).toBe(beefMeals.meals[i].strMeal)
+      })    
+    });
+   
   })
 });

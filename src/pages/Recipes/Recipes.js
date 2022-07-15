@@ -6,17 +6,18 @@ import BasicCard from '../../components/BasicCard/BasicCard';
 function Recipes({ location: { pathname } }) {
   const [recipes, setRecipes] = useState([]);
   const [categories, setCategories] = useState([]);
+  const [category, setCategory] = useState();
 
   useEffect(() => {
     const getRecipes = async () => {
       const db = pathname === '/foods' ? 'meal' : 'cocktail';
-      let response = await fetchRecipes(db);
+      let response = await fetchRecipes(db, '', category);
       setRecipes(response);
       response = await fetchCategories(db);
       setCategories(response);
     };
     getRecipes();
-  }, [pathname]);
+  }, [pathname, category]);
 
   return (
     <div>
@@ -28,8 +29,10 @@ function Recipes({ location: { pathname } }) {
         >
           {strCategory}
           <input
+            onClick={ ({ target: { value } }) => setCategory(value) }
             type="radio"
             name="category"
+            value={ strCategory }
             id={ `${strCategory}-category-filter` }
           />
         </label>
