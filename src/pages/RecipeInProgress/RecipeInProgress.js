@@ -3,27 +3,43 @@ import PropTypes from 'prop-types';
 import getRecipeAPI from '../../services/getRecipeAPI';
 import ShareButton from '../../components/ShareButton';
 import FavoriteButton from '../../components/FavoriteButton';
+import RecipeInfo from '../../components/RecipeInfo/RecipeInfo';
+import getIngredientAndMeasureList from '../../helpers/getIngredientAndMeasureList';
 
 function RecipeInProgress({ match: { params: { id }, path } }) {
-  const [recipe, setRecipe] = useState({});
+  const [recipe, setRecipe] = useState();
 
   useEffect(() => {
     const getRecipe = async () => {
-      const type = path.includes('food') ? 'meal' : 'cocktail';
+      const isFood = path.includes('food');
+      const type = isFood ? 'meal' : 'cocktail';
       const response = await getRecipeAPI(type, id);
-      setRecipe(response);
+      const ingredients = getIngredientAndMeasureList(response);
+      const strType = isFood ? 'Meal' : 'Drink';
+      const strCategory = isFood ? 'Category' : 'Alcoholic';
+      setRecipe({
+        ...response,
+        isDetails: false,
+        isFood,
+        title: response[`str${strType}`],
+        img: response[`str${strType}Thumb`],
+        category: response[`str${strCategory}`],
+        instructions: response.strInstructions,
+        video: response.strYoutube,
+        ingredients,
+      });
     };
     getRecipe();
   }, [id, path]);
 
-  return recipe && (
+  return !recipe ? null : (
     <div>
       <ShareButton />
       <FavoriteButton
         info={ recipe }
         id={ path.includes('food') ? recipe.idMeal : recipe.idDrink }
       />
-      RecipeInProgress
+      <RecipeInfo recipe={ recipe } />
     </div>
   );
 }

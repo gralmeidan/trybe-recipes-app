@@ -55,7 +55,7 @@ function FavoriteButton({ info }) {
 }
 
 FavoriteButton.propTypes = {
-  info: PropTypes.objectOf(PropTypes.string).isRequired,
+  info: PropTypes.shape({}).isRequired,
 };
 
 export default FavoriteButton;

@@ -30,7 +30,6 @@ function RecipeInfo({ recipe }) {
               id={ ingredient.ingredient }
               value={ ingredient.ingredient }
               name="ingredientStep"
-              onClick={ scratchStep }
             />
             {`${ingredient.measure} ${ingredient.ingredient}`}
           </label>
