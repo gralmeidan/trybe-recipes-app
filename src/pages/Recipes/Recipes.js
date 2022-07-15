@@ -8,7 +8,8 @@ function Recipes({ location: { pathname } }) {
   const [recipes, setRecipes] = useState([]);
   const [categories, setCategories] = useState([]);
   const [category, setCategory] = useState();
-  const headerTitle = 'Food/Drinks Recipes';
+
+  const headerTitle = pathname === '/foods' ? 'Foods' : 'Drinks';
 
   useEffect(() => {
     const getRecipes = async () => {
