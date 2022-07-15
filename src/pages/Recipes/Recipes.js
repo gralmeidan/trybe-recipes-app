@@ -1,9 +1,13 @@
 import React from 'react';
+import { useLocation } from 'react-router-dom';
 import Header from '../../components';
 
 function Recipes() {
   // Título apenas para teste
-  const headerTitle = 'Food/Drinks Recipes';
+  const location = useLocation();
+  let headerTitle;
+  if (location.pathname === '/foods') headerTitle = 'Foods';
+  if (location.pathname === '/drinks') headerTitle = 'Drinks';
 
   return (
     <>
