@@ -1,19 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import Context from './Context';
 
 function Provider({ children }) {
+  const contextValue = {};
+
   return (
-    <Context.Provider>
-      {children}
+    <Context.Provider value={ contextValue }>
+      { children }
     </Context.Provider>
   );
 }
 
 Provider.propTypes = {
-  children: PropTypes.arrayOf(
-    PropTypes.element.isRequired,
-  ).isRequired,
+  children: PropTypes.element.isRequired,
 };
 
 export default Provider;
