@@ -14,7 +14,7 @@ function Provider({ children }) {
 }
 
 Provider.propTypes = {
-  children: PropTypes.node.isRequired,
+  children: PropTypes.element.isRequired,
 };
 
 export default Provider;
