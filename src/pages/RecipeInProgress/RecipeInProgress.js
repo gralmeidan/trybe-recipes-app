@@ -5,42 +5,68 @@ import ShareButton from '../../components/ShareButton';
 import FavoriteButton from '../../components/FavoriteButton';
 import RecipeInfo from '../../components/RecipeInfo/RecipeInfo';
 import getIngredientAndMeasureList from '../../helpers/getIngredientAndMeasureList';
+import useLocalStorage from '../../hooks/useLocalStorage';
+
+async function getRecipe(setRecipe, inProgress, setInProgress, { id, path }) {
+  const isFood = path.includes('food');
+  const type = isFood ? 'meal' : 'cocktail';
+  const response = await getRecipeAPI(type, id);
+  const ingredients = getIngredientAndMeasureList(response);
+  const strType = isFood ? 'Meal' : 'Drink';
+  const strCategory = isFood ? 'Category' : 'Alcoholic';
+  setRecipe({
+    ...response,
+    isDetails: false,
+    isFood,
+    title: response[`str${strType}`],
+    img: response[`str${strType}Thumb`],
+    category: response[`str${strCategory}`],
+    instructions: response.strInstructions,
+    video: response.strYoutube,
+    ingredients,
+  });
+
+  if (!inProgress[id]) {
+    setInProgress((prev) => ({
+      ...prev,
+      [id]: ingredients.map((obj) => ({
+        ...obj,
+        checked: false,
+      })),
+    }));
+  }
+}
 
 function RecipeInProgress({ match: { params: { id }, path } }) {
   const [recipe, setRecipe] = useState();
+  const [
+    inProgress,
+    setInProgress,
+  ] = useLocalStorage('inProgressRecipes', {});
 
   useEffect(() => {
-    const getRecipe = async () => {
-      const isFood = path.includes('food');
-      const type = isFood ? 'meal' : 'cocktail';
-      const response = await getRecipeAPI(type, id);
-      const ingredients = getIngredientAndMeasureList(response);
-      const strType = isFood ? 'Meal' : 'Drink';
-      const strCategory = isFood ? 'Category' : 'Alcoholic';
-      setRecipe({
-        ...response,
-        isDetails: false,
-        isFood,
-        title: response[`str${strType}`],
-        img: response[`str${strType}Thumb`],
-        category: response[`str${strCategory}`],
-        instructions: response.strInstructions,
-        video: response.strYoutube,
-        ingredients,
-      });
-    };
-    getRecipe();
+    getRecipe(setRecipe, inProgress, setInProgress, { id, path });
   }, [id, path]);
 
   const handleIngredientCheck = ({ target }) => {
-    const value = target.checked;
+    const { checked } = target;
     target
       .parentElement
       .style
-      .textDecoration = value ? 'line-through' : 'initial';
+      .textDecoration = checked ? 'line-through' : 'initial';
+
+    setInProgress((prev) => ({
+      ...prev,
+      [id]: prev[id].map((obj) => (obj.ingredient !== target.value
+        ? obj
+        : {
+          ...obj,
+          checked,
+        })),
+    }));
   };
 
-  return !recipe ? null : (
+  return !recipe || !inProgress[id] ? null : (
     <div>
       <ShareButton />
       <FavoriteButton
@@ -48,8 +74,12 @@ function RecipeInProgress({ match: { params: { id }, path } }) {
         id={ path.includes('food') ? recipe.idMeal : recipe.idDrink }
       />
       <RecipeInfo
-        recipe={ recipe }
+        recipe={ {
+          ...recipe,
+          ingredients: inProgress[id],
+        } }
         handleChange={ handleIngredientCheck }
+        checkedIngredients={ inProgress[id] }
       />
       <button
         data-testid="finish-recipe-btn"

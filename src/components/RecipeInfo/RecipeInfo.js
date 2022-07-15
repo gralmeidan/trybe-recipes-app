@@ -31,6 +31,7 @@ function RecipeInfo({ recipe, handleChange }) {
               value={ ingredient.ingredient }
               name="ingredientStep"
               onChange={ handleChange }
+              checked={ ingredient.checked }
             />
             {`${ingredient.measure} ${ingredient.ingredient}`}
           </label>
