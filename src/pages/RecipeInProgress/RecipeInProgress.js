@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import getFood from '../../services/getFoodAPI';
 import getDrink from '../../services/getDrinkAPI';
+import ShareButton from '../../components/ShareButton';
+import FavoriteButton from '../../components/FavoriteButton';
 
 function RecipeInProgress({ match: { params: { id }, path } }) {
   const [recipe, setRecipe] = useState({});
@@ -14,8 +16,13 @@ function RecipeInProgress({ match: { params: { id }, path } }) {
     getRecipe(path.includes('food') ? getFood : getDrink);
   }, [id, path]);
 
-  return (
+  return recipe && (
     <div>
+      <ShareButton />
+      <FavoriteButton
+        info={ recipe }
+        id={ path.includes('food') ? recipe.idMeal : recipe.idDrink }
+      />
       RecipeInProgress
     </div>
   );

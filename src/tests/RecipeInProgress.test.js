@@ -4,9 +4,8 @@ import userEvent from '@testing-library/user-event'
 import App from "../App";
 import renderWithRouter from "./helpers/renderWithRouter";
 import mockFetch, {
-  COCKTAILDB_REQUEST_URL,
+  DRINKBYID_REQUEST_URL,
   MEALBYID_REQUEST_URL,
-  MEALDB_REQUEST_URL,
 } from "./mocks/fetch";
 import { cocktaildbCategories, mealdbCategories } from "./mocks/categoriesResponse";
 import beefMeals from "../../cypress/mocks/beefMeals";
@@ -31,6 +30,27 @@ describe("Testa a tela de receitas", () => {
       expect(fetch).toHaveBeenCalledWith(MEALBYID_REQUEST_URL)
     })
 
+    history.push("/drinks/15997/in-progress");
+    
+    await waitFor(() => {
+      expect(fetch).toHaveBeenCalledWith(DRINKBYID_REQUEST_URL)
+    })
   });
+
+  it("Deve haver um botão de compartilhar receita", async () => {
+    const { history } = renderWithRouter(<App />);
+    history.push("/foods/52977/in-progress");
+    
+    await waitFor(() => {
+      expect(fetch).toHaveBeenCalledWith(MEALBYID_REQUEST_URL)
+    })
+
+    history.push("/drinks/15997/in-progress");
+    
+    await waitFor(() => {
+      expect(fetch).toHaveBeenCalledWith(DRINKBYID_REQUEST_URL)
+    })
+  });
+
 
 });
