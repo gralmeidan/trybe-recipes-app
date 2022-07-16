@@ -1,73 +1,70 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
+import { Redirect, useLocation } from 'react-router-dom';
+
+import Provider from '../../context/Provider';
+
+import SearchOptions from './SearchOptions';
 
 const SearchBar = () => {
   const [searchValue, setSearchValue] = useState('');
+  const [searchRadio, setSearchRadio] = useState('');
+  const [redirect, setRedirect] = useState(false);
 
-  const handleChange = (value) => {
-    setSearchValue(value);
+  const { handleSearch } = useContext(Provider);
+  const location = useLocation();
+
+  const handleChange = (evt) => {
+    const { target } = evt;
+
+    if (target.type === 'radio') setSearchRadio(target.value);
+    if (target.id === 'search-input') setSearchValue(target.value);
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleSubmit = (evt) => {
+    evt.preventDefault();
+
+    if (searchValue.length > 1 && searchRadio === 'first-letter') {
+      global.alert('A busca por primeira letra só pode ter 1 caractere');
+    } else {
+      const searchObj = {
+        type: location.pathname.replace('/', ''),
+        option: searchRadio,
+        value: searchValue,
+      };
+      handleSearch(searchObj);
+      setRedirect(true);
+    }
   };
 
   return (
-    <div id="search">
-      <form onSubmit={ (e) => handleSubmit(e) }>
-        <div>
-          <input
-            type="text"
-            id="search-input"
-            name="search-input"
-            value={ searchValue }
-            onChange={ ({ target: { value } }) => handleChange(value) }
-            data-testid="search-input"
-          />
-        </div>
-        <div>
-          <label htmlFor="ingredient-search-radio">
+    <>
+      { redirect && <Redirect to="/foods/search" /> }
+      <div id="search">
+        <form onSubmit={ handleSubmit }>
+          <div>
             <input
-              type="radio"
-              id="ingredient-search-radio"
-              name="ingredient-search-radio"
-              data-testid="ingredient-search-radio"
-              value="ingredient"
+              type="text"
+              id="search-input"
+              name="search-input"
+              value={ searchValue }
+              onChange={ handleChange }
+              data-testid="search-input"
             />
-            Ingredient
-          </label>
-          <label htmlFor="name-search-radio">
-            <input
-              type="radio"
-              id="name-search-radio"
-              name="name-search-radio"
-              data-testid="name-search-radio"
-              value="name"
-            />
-            Name
-          </label>
-          <label htmlFor="first-letter-search-radio">
-            <input
-              type="radio"
-              id="first-letter-search-radio"
-              name="first-letter-search-radio"
-              data-testid="first-letter-search-radio"
-              value="first-letter"
-            />
-            First Letter
-          </label>
-        </div>
-        <div>
-          <button
-            type="button"
-            id="exec-search-btn"
-            name="exec-search-btn"
-            data-testid="exec-search-btn"
-          >
-            Search
-          </button>
-        </div>
-      </form>
-    </div>
+          </div>
+          <SearchOptions option={ searchRadio } handleChange={ handleChange } />
+          <div>
+            <button
+              type="submit"
+              id="exec-search-btn"
+              name="exec-search-btn"
+              data-testid="exec-search-btn"
+            >
+              Search
+            </button>
+          </div>
+        </form>
+      </div>
+    </>
   );
 };
 
