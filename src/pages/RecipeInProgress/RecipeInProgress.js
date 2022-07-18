@@ -8,7 +8,7 @@ import getIngredientAndMeasureList from '../../helpers/getIngredientAndMeasureLi
 import useLocalStorage from '../../hooks/useLocalStorage';
 
 // Tem q refatorar
-async function getRecipe(setRecipe, inProgress, setInProgress, { id, path }) {
+async function getRecipe(setRecipe, inProgress, setInProgress, { id, path, type: ls }) {
   const isFood = path.includes('food');
   const type = isFood ? 'meal' : 'cocktail';
   const response = await getRecipeAPI(type, id);
@@ -27,10 +27,10 @@ async function getRecipe(setRecipe, inProgress, setInProgress, { id, path }) {
     ingredients,
   });
 
-  if (!inProgress[id]) {
+  if (!inProgress[ls]?.[id]) {
     setInProgress((prev) => ({
       ...prev,
-      [`${type}s`]: {
+      [ls]: {
         [id]: ingredients.map((obj) => ({
           ...obj,
           checked: false,
@@ -43,14 +43,14 @@ async function getRecipe(setRecipe, inProgress, setInProgress, { id, path }) {
 function RecipeInProgress({ match: { params: { id }, path }, history }) {
   const [recipe, setRecipe] = useState();
   const [isButtonDisabled, setIsButtonDisabled] = useState();
-  const [type, setType] = useState('');
+  const [type, setType] = useState(path.includes('food') ? 'meals' : 'cocktails');
   const [
     inProgress,
     setInProgress,
   ] = useLocalStorage('inProgressRecipes', {});
 
   useEffect(() => {
-    getRecipe(setRecipe, inProgress, setInProgress, { id, path });
+    getRecipe(setRecipe, inProgress, setInProgress, { id, path, type });
     setType(path.includes('food') ? 'meals' : 'cocktails');
   }, [id, path]);
 
@@ -79,7 +79,7 @@ function RecipeInProgress({ match: { params: { id }, path }, history }) {
     }));
   };
 
-  return !recipe || !inProgress[id] ? null : (
+  return !recipe || !inProgress[type]?.[id] ? null : (
     <div>
       <ShareButton />
       <FavoriteButton
@@ -89,7 +89,7 @@ function RecipeInProgress({ match: { params: { id }, path }, history }) {
       <RecipeInfo
         recipe={ {
           ...recipe,
-          ingredients: inProgress[id],
+          ingredients: inProgress[type][id],
         } }
         handleChange={ handleIngredientCheck }
         checkedIngredients={ inProgress[id] }
