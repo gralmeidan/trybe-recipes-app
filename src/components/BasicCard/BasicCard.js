@@ -29,7 +29,6 @@ function BasicCard(props) {
         width={ 100 }
       />
       <p
-        // data-testid={ `${index}-card-name` }
         data-testid={ dataTitle }
       >
         {title}

@@ -51,9 +51,7 @@ function RecipeDetails({ match: { params: { id }, path } }) {
     getRecomendation();
   }, []);
 
-  // const isRecipeDone = () => {
-  //   return true;
-  // }
+  const isRecipeDone = () => true;
 
   return (
     <section>
@@ -75,15 +73,16 @@ function RecipeDetails({ match: { params: { id }, path } }) {
           </div>
         ))}
       </div>
-      {/* {isRecipeDone() ? (
+      {isRecipeDone() ? (
         <div className="start-recipe-btn">
           <button
             type="button"
+            className="start-recipe-btn"
             data-testid="start-recipe-btn"
           >
             Start Recipe
           </button>
-        </div>) : null } */}
+        </div>) : null }
     </section>
   );
 }
