@@ -13,9 +13,8 @@ function RecipeDetails({ match: { params: { id }, path } }) {
   useEffect(() => {
     const getRecipe = async () => {
       const type = path.includes('foods') ? 'meal' : 'cocktail';
-      const result = path.includes('foods') ? 'meals' : 'drinks';
 
-      const recipeObj = await getRecipeAPI(type, id, result);
+      const recipeObj = await getRecipeAPI(type, id);
       const ingredients = getIngredientAndMeasureList(recipeObj);
 
       const strType = path.includes('foods') ? 'Meal' : 'Drink';

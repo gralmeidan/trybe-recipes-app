@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-function RecipeInfo({ recipe }) {
+function RecipeInfo({ recipe, handleChange }) {
   const { isDetails, isFood, img,
     title, category, instructions, ingredients, video } = recipe;
   return (
@@ -30,7 +30,8 @@ function RecipeInfo({ recipe }) {
               id={ ingredient.ingredient }
               value={ ingredient.ingredient }
               name="ingredientStep"
-              onClick={ scratchStep }
+              onChange={ handleChange }
+              checked={ ingredient.checked }
             />
             {`${ingredient.measure} ${ingredient.ingredient}`}
           </label>
@@ -65,6 +66,11 @@ RecipeInfo.propTypes = {
     ingredients: PropTypes.arrayOf(PropTypes.object),
     video: PropTypes.string,
   }).isRequired,
+  handleChange: PropTypes.func,
+};
+
+RecipeInfo.defaultProps = {
+  handleChange: () => {},
 };
 
 export default RecipeInfo;
