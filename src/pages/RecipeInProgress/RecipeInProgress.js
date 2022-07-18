@@ -38,8 +38,9 @@ async function getRecipe(setRecipe, inProgress, setInProgress, { id, path }) {
 }
 //
 
-function RecipeInProgress({ match: { params: { id }, path } }) {
+function RecipeInProgress({ match: { params: { id }, path }, history }) {
   const [recipe, setRecipe] = useState();
+  const [isButtonDisabled, setIsButtonDisabled] = useState();
   const [
     inProgress,
     setInProgress,
@@ -48,6 +49,11 @@ function RecipeInProgress({ match: { params: { id }, path } }) {
   useEffect(() => {
     getRecipe(setRecipe, inProgress, setInProgress, { id, path });
   }, [id, path]);
+
+  useEffect(() => {
+    setIsButtonDisabled(inProgress[id]
+      && !inProgress[id].every(({ checked }) => checked));
+  }, [inProgress, id]);
 
   const handleIngredientCheck = ({ target }) => {
     const { checked } = target;
@@ -85,6 +91,8 @@ function RecipeInProgress({ match: { params: { id }, path } }) {
       <button
         data-testid="finish-recipe-btn"
         type="button"
+        disabled={ isButtonDisabled }
+        onClick={ () => history.push('/done-recipes') }
       >
         Finalizar
       </button>
@@ -98,6 +106,9 @@ RecipeInProgress.propTypes = {
       id: PropTypes.string.isRequired,
     }).isRequired,
     path: PropTypes.string.isRequired,
+  }).isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
   }).isRequired,
 };
 
