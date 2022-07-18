@@ -30,10 +30,12 @@ async function getRecipe(setRecipe, inProgress, setInProgress, { id, path }) {
   if (!inProgress[id]) {
     setInProgress((prev) => ({
       ...prev,
-      [id]: ingredients.map((obj) => ({
-        ...obj,
-        checked: false,
-      })),
+      [`${type}s`]: {
+        [id]: ingredients.map((obj) => ({
+          ...obj,
+          checked: false,
+        })),
+      },
     }));
   }
 }
@@ -41,6 +43,7 @@ async function getRecipe(setRecipe, inProgress, setInProgress, { id, path }) {
 function RecipeInProgress({ match: { params: { id }, path }, history }) {
   const [recipe, setRecipe] = useState();
   const [isButtonDisabled, setIsButtonDisabled] = useState();
+  const [type, setType] = useState('');
   const [
     inProgress,
     setInProgress,
@@ -48,6 +51,7 @@ function RecipeInProgress({ match: { params: { id }, path }, history }) {
 
   useEffect(() => {
     getRecipe(setRecipe, inProgress, setInProgress, { id, path });
+    setType(path.includes('food') ? 'meals' : 'cocktails');
   }, [id, path]);
 
   useEffect(() => {
@@ -64,12 +68,14 @@ function RecipeInProgress({ match: { params: { id }, path }, history }) {
 
     setInProgress((prev) => ({
       ...prev,
-      [id]: prev[id].map((obj) => (obj.ingredient !== target.value
-        ? obj
-        : {
-          ...obj,
-          checked,
-        })),
+      [type]: {
+        [id]: prev[type][id].map((obj) => (obj.ingredient !== target.value
+          ? obj
+          : {
+            ...obj,
+            checked,
+          })),
+      },
     }));
   };
 
