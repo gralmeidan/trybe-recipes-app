@@ -101,4 +101,63 @@ describe("Testa a tela de receitas", () => {
     expect(button.firstChild.src).toMatch(new RegExp(FILLED, 'i'))
 
   })
+
+  it('Deve ser possível marcar ingredientes como concluídos e devem permanecer marcados entre reloads', async () => {
+    const { history } = renderWithRouter(<App />);
+    history.push("/foods/52977/in-progress");
+    
+    let ingredients;
+    await waitFor(() => {
+      ingredients = screen.getAllByTestId(/-ingredient-step/i)
+    })
+
+    expect(ingredients).toHaveLength(13)
+
+    ingredients.forEach((el) => {
+      act(() => {
+        userEvent.click(el)
+      })
+      expect(el).toHaveStyle('text-decoration: line-through')
+    })
+
+    history.push("/");
+    history.push("/foods/52977/in-progress");
+
+    await waitFor(() => {
+      ingredients = screen.getAllByTestId(/-ingredient-step/i)
+    })
+
+    expect(ingredients).toHaveLength(13)
+
+    ingredients.forEach((el) => {
+      expect(el.firstChild).toBeChecked()
+    })
+  })
+
+  it('O botão de finalizar deve funcionar corretamente', async () => {
+    const { history } = renderWithRouter(<App />);
+    localStorage.setItem('inProgressRecipes', '')
+    history.push("/foods/52977/in-progress");
+    
+    let ingredients;
+    await waitFor(() => {
+      ingredients = screen.getAllByTestId(/-ingredient-step/i)
+    })
+
+    const button = screen.getByTestId('finish-recipe-btn')
+
+    expect(button).toBeDisabled()
+    ingredients.forEach((el) => {
+      act(() => {
+        userEvent.click(el)
+      })
+    })
+    
+    expect(button).toBeEnabled()
+
+    userEvent.click(button)
+
+    expect(history.location.pathname).toBe('/done-recipes')
+  })
+
 });
