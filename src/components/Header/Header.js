@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-import SearchBar from './SearchBar';
+import SearchBar from '../Search/SearchBar';
+import SearchIcon from '../Search/SearchIcon';
 
 import profileIcon from '../../images/profileIcon.svg';
-import SearchIcon from './SearchIcon';
 
 const Header = ({ title }) => {
   const [searchEnable, setSearchEnable] = useState(false);
