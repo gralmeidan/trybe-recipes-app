@@ -1,12 +1,15 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { useLocation } from 'react-router-dom';
-import useLocalStorage from '../hooks/useLocalStorage';
 import Outline from '../images/whiteHeartIcon.svg';
 import Fill from '../images/blackHeartIcon.svg';
+import Context from '../context/Context';
 
 function FavoriteButton({ info, dataTest }) {
-  const [favorites, setFavorite] = useLocalStorage('favoriteRecipes', []);
+  const {
+    favorites,
+    setFavorites,
+  } = useContext(Context);
   const { pathname } = useLocation();
   const type = pathname.includes('food') ? 'Meal' : 'Drink';
 
@@ -23,7 +26,7 @@ function FavoriteButton({ info, dataTest }) {
   const favorited = favorites.find(({ id }) => id === recipe.id);
 
   const handleClick = () => {
-    setFavorite((prev) => (!favorited
+    setFavorites((prev) => (!favorited
       ? [...prev, recipe]
       : prev.filter(({ id }) => id !== recipe.id)
     ));

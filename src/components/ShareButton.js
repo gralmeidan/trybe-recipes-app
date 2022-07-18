@@ -4,13 +4,13 @@ import copy from 'clipboard-copy';
 import PropTypes from 'prop-types';
 import Icon from '../images/shareIcon.svg';
 
-function ShareButton({ dataTest }) {
+function ShareButton({ dataTest, path }) {
   const { pathname } = useLocation();
 
   const [copied, setCopied] = useState(false);
 
   const handleClick = () => {
-    copy(`http://localhost:3000${pathname.replace('/in-progress', '')}`);
+    copy(`http://localhost:3000${path || pathname.replace('/in-progress', '')}`);
     setCopied(true);
   };
 
@@ -31,10 +31,12 @@ function ShareButton({ dataTest }) {
 
 ShareButton.propTypes = {
   dataTest: PropTypes.string,
+  path: PropTypes.string,
 };
 
 ShareButton.defaultProps = {
   dataTest: 'share-btn',
+  path: undefined,
 };
 
 export default ShareButton;

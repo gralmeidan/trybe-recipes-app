@@ -31,7 +31,10 @@ function DetailedCard(props) {
       <p data-testid={ `${index}-horizontal-top-text` }>
         {type === 'food' ? `${nationality} - ${category}` : alcoholicOrNot}
       </p>
-      <ShareButton dataTest={ `${index}-horizontal-share-btn` } />
+      <ShareButton
+        dataTest={ `${index}-horizontal-share-btn` }
+        path={ `/${type}s/${id}` }
+      />
       { doneDate ? <p data-testid={ `${index}-horizontal-done-date` }>{doneDate}</p> : (
         <FavoriteButton
           dataTest={ `${index}-horizontal-favorite-btn` }
