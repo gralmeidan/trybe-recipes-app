@@ -45,6 +45,7 @@ function RecipeInProgress({ match: { params: { id }, path }, history }) {
     inProgress,
     setInProgress,
   ] = useLocalStorage('inProgressRecipes', {});
+  const [setIsDone] = useLocalStorage('doneRecipes', []);
 
   useEffect(() => {
     getRecipe(setRecipe, inProgress, setInProgress, { id, path });
@@ -73,6 +74,17 @@ function RecipeInProgress({ match: { params: { id }, path }, history }) {
     }));
   };
 
+  const handleDoneRecipe = () => {
+    setIsDone((prev) => ([
+      ...prev,
+      {
+        recipe,
+      },
+    ]));
+
+    history.push('/done-recipes');
+  };
+
   return !recipe || !inProgress[id] ? null : (
     <div>
       <ShareButton />
@@ -92,7 +104,7 @@ function RecipeInProgress({ match: { params: { id }, path }, history }) {
         data-testid="finish-recipe-btn"
         type="button"
         disabled={ isButtonDisabled }
-        onClick={ () => history.push('/done-recipes') }
+        onClick={ () => handleDoneRecipe }
       >
         Finalizar
       </button>
