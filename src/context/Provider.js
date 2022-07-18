@@ -5,7 +5,7 @@ import Context from './Context';
 
 function Provider({ children }) {
   const [search, setSearch] = useState({
-    option: '',
+    option: 'name',
     value: '',
   });
 
