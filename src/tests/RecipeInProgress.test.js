@@ -157,7 +157,9 @@ describe("Testa a tela de receitas", () => {
 
     userEvent.click(button)
 
-    expect(history.location.pathname).toBe('/done-recipes')
+    await waitFor(() => {
+      expect(history.location.pathname).toBe('/done-recipes')
+    })
   })
 
 });

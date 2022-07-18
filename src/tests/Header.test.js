@@ -1,10 +1,12 @@
 import React from 'react';
-import { screen } from '@testing-library/react';
+import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event'
-
 import renderWithRouter from './helpers/renderWithRouter';
-
 import App from '../App';
+import mockFetch from './mocks/fetch';
+import { act } from 'react-dom/test-utils';
+import arrabiataQuery from './mocks/arrabiataQuery';
+import chickenQuery from './mocks/chickenQuery';
 import Header from '../components/Header/Header';
 
 describe('Verifica o Título', () => {
@@ -148,3 +150,130 @@ describe('Botão de Busca', () => {
     expect(searchInput).toHaveValue(searchValue);
   });
 }); 
+
+describe('Testa as opções da barra de pesquisa', () => {
+  beforeEach(() => {
+    global.fetch = jest.fn(mockFetch);
+  });
+
+  it('Caso só haja um resultado, deve redirecionar para a página de detalhes da receita', () => {
+    const { history } = renderWithRouter(<App />);
+    history.push('/foods');
+
+    const searchBtn = screen.getByTestId('search-top-btn');
+    userEvent.click(searchBtn);
+
+    const searchInput = screen.getByTestId('search-input');
+    const nameOption = screen.getByTestId('name-search-radio')
+    const queryButton = screen.getByTestId('exec-search-btn')
+    const arrabiataId = arrabiataQuery.meals.idMeal
+
+    userEvent.click(nameOption)
+    userEvent.type(searchInput, 'arrabiata');
+    
+    act(() => {
+      userEvent.click(queryButton)
+    })
+
+    expect(history.location.pathname).toMatch(new RegExp(arrabiataId))
+  });
+
+  it('Deve ser possível pesquisar por primeira letra', async () => {
+    const { history } = renderWithRouter(<App />);
+    history.push('/drinks');
+
+    const searchBtn = screen.getByTestId('search-top-btn');
+    userEvent.click(searchBtn);
+
+    const searchInput = screen.getByTestId('search-input');
+    const firstLetterOption = screen.getByTestId('first-letter-search-radio')
+    const queryButton = screen.getByTestId('exec-search-btn')
+
+    userEvent.click(firstLetterOption)
+    userEvent.type(searchInput, 'v');
+    
+    act(() => {
+      userEvent.click(queryButton)
+    })
+
+    await waitFor(() => {
+      screen.getAllByTestId(/-card-name/).forEach((el) => {
+        expect(el.textContent).toMatch(/^v/i)
+      })
+    })
+  });
+
+  it('Deve ser possível pesquisar por primeira letra', async () => {
+    const { history } = renderWithRouter(<App />);
+    history.push('/foods');
+
+    const searchBtn = screen.getByTestId('search-top-btn');
+    userEvent.click(searchBtn);
+
+    const searchInput = screen.getByTestId('search-input');
+    const ingredientOption = screen.getByTestId('ingredient-search-radio')
+    const queryButton = screen.getByTestId('exec-search-btn')
+
+    userEvent.click(ingredientOption)
+    userEvent.type(searchInput, 'chicken');
+    
+    act(() => {
+      userEvent.click(queryButton)
+    })
+
+    await waitFor(() => {
+      const cards = screen.getAllByTestId(/-card-name/)
+      const recipes = chickenQuery.meals
+      expect(cards).toHaveLength(recipes.length)
+    })
+  });
+
+  it('Deve mostrar um alert caso não ache nada', async () => {
+    const { history } = renderWithRouter(<App />);
+    global.alert = jest.fn()
+    history.push('/drinks');
+
+    const searchBtn = screen.getByTestId('search-top-btn');
+    userEvent.click(searchBtn);
+
+    const searchInput = screen.getByTestId('search-input');
+    const nameOption = screen.getByTestId('name-search-radio')
+    const queryButton = screen.getByTestId('exec-search-btn')
+
+    userEvent.click(nameOption)
+    userEvent.type(searchInput, 'loremipsum');
+    
+    act(() => {
+      userEvent.click(queryButton)
+    })
+
+    await waitFor(() => {
+      expect(alert).toHaveBeenCalledWith('Sorry, we haven\'t found any recipes for these filters.')
+    })
+  });
+
+  it('Deve mostrar um alert caso tenha mais de uma letra no campo first-letter', async () => {
+    const { history } = renderWithRouter(<App />);
+    global.alert = jest.fn()
+    history.push('/drinks');
+
+    const searchBtn = screen.getByTestId('search-top-btn');
+    userEvent.click(searchBtn);
+
+    const searchInput = screen.getByTestId('search-input');
+    const firstLetterOption = screen.getByTestId('first-letter-search-radio')
+    const queryButton = screen.getByTestId('exec-search-btn')
+
+    userEvent.click(firstLetterOption)
+    userEvent.type(searchInput, 'loremipsum');
+    
+    act(() => {
+      userEvent.click(queryButton)
+    })
+
+    await waitFor(() => {
+      expect(alert).toHaveBeenCalledWith('Your search must have only 1 (one) character')
+    })
+  });
+
+})
