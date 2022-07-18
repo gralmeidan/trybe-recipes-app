@@ -55,9 +55,9 @@ function RecipeInProgress({ match: { params: { id }, path }, history }) {
   }, [id, path]);
 
   useEffect(() => {
-    setIsButtonDisabled(inProgress[id]
-      && !inProgress[id].every(({ checked }) => checked));
-  }, [inProgress, id]);
+    setIsButtonDisabled(inProgress[type]?.[id]
+      && !inProgress[type]?.[id].every(({ checked }) => checked));
+  }, [inProgress, type, id]);
 
   const handleIngredientCheck = ({ target }) => {
     const { checked } = target;
