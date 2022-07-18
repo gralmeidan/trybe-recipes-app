@@ -5,6 +5,7 @@ import getIngredientAndMeasureList from '../../helpers/getIngredientAndMeasureLi
 import getRecipeAPI from '../../services/getRecipeAPI';
 import getRecomendationApi from '../../services/getRecomendationsAPi';
 import BasicCard from '../../components/BasicCard/BasicCard';
+import './RecipeDetails.css';
 
 function RecipeDetails({ match: { params: { id }, path } }) {
   const [recipe, setRecipe] = useState();
@@ -50,21 +51,31 @@ function RecipeDetails({ match: { params: { id }, path } }) {
     getRecomendation();
   }, []);
 
+  // const isRecipeDone = () => {
+  //   return true;
+  // }
+
   return (
     <section>
       {recipe && <RecipeInfo recipe={ recipe } />}
-      <div>
+      <div className="recomendation">
         {basicCards && basicCards.map((basicCard, index) => (
-          <div key={ index } data-testid={ `${index}-recomendation-card` }>
+          <div
+            key={ index }
+            data-testid={ `${index}-recomendation-card` }
+            className="recomendation-card"
+          >
             <BasicCard
+              className="recomendation-card-item"
               pathname={ path }
               index={ index }
               { ...basicCard }
+              dataTitle={ `${index}-recomendation-title` }
             />
           </div>
         ))}
       </div>
-      {/* {isDone ? (
+      {/* {isRecipeDone() ? (
         <div className="start-recipe-btn">
           <button
             type="button"
@@ -80,7 +91,7 @@ function RecipeDetails({ match: { params: { id }, path } }) {
 RecipeDetails.propTypes = {
   match: PropTypes.shape({
     params: PropTypes.shape({
-      id: PropTypes.number.isRequired,
+      id: PropTypes.string.isRequired,
     }).isRequired,
     path: PropTypes.string.isRequired,
   }).isRequired,
