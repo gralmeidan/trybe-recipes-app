@@ -1,26 +1,25 @@
 import React, { useContext, useState } from 'react';
-
 import Context from '../../context/Context';
-
 import SearchOptions from './SearchOptions';
 
 const SearchBar = () => {
-  const [searchValue, setSearchValue] = useState('');
-  const [searchRadio, setSearchRadio] = useState('');
+  const { handleSearch, search } = useContext(Context);
 
-  const { handleSearch } = useContext(Context);
+  const [searchValue, setSearchValue] = useState(search.value);
+  const [searchRadio, setSearchRadio] = useState(search.option);
+
   const handleChange = (evt) => {
     const { target } = evt;
 
     if (target.type === 'radio') setSearchRadio(target.value);
-    if (target.id === 'search-input') setSearchValue(target.value);
+    if (target.type === 'text') setSearchValue(target.value);
   };
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
 
     if (searchValue.length > 1 && searchRadio === 'first-letter') {
-      global.alert('A busca por primeira letra só pode ter 1 caractere');
+      global.alert('Your search must have only 1 (one) character');
     } else {
       const searchObj = {
         option: searchRadio,
