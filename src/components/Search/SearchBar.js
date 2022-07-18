@@ -1,7 +1,5 @@
 import React, { useContext, useState } from 'react';
-
 import Context from '../../context/Context';
-
 import SearchOptions from './SearchOptions';
 
 const SearchBar = () => {
@@ -11,9 +9,19 @@ const SearchBar = () => {
   const { handleSearch } = useContext(Context);
   const handleChange = (evt) => {
     const { target } = evt;
+    const LAST_CHAR = -1;
 
-    if (target.type === 'radio') setSearchRadio(target.value);
-    if (target.id === 'search-input') setSearchValue(target.value);
+    if (target.type === 'radio') {
+      setSearchRadio(target.value);
+      setSearchValue('');
+      return;
+    }
+
+    setSearchValue(
+      searchRadio === 'first-letter'
+        ? target.value.slice(LAST_CHAR)
+        : target.value,
+    );
   };
 
   const handleSubmit = (evt) => {
