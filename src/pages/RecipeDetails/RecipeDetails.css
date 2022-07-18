@@ -6,18 +6,17 @@ body {
   display: flex;
   flex-direction: row;
   overflow-x: scroll;
-  scroll-snap-type: x mandatory;
-  scroll-snap-type: x mandatory;
   min-width: 100vw;
+  scroll-snap-type: x mandatory;
 }
 
 .recomendation-card {
-  scroll-snap-align: start;
   min-width: 50%;
+  scroll-snap-align: start;
   margin: 1px;
 }
 
 .start-recipe-btn {
+  bottom: 0;
   position: fixed;
-  bottom: 0px;
 }
