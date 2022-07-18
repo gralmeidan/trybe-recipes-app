@@ -7,7 +7,8 @@ import RecipeInfo from '../../components/RecipeInfo/RecipeInfo';
 import getIngredientAndMeasureList from '../../helpers/getIngredientAndMeasureList';
 import useLocalStorage from '../../hooks/useLocalStorage';
 
-async function getRecipe(setRecipe, inProgress, setInProgress, { id, path }) {
+// Tem q refatorar
+async function getRecipe(setRecipe, inProgress, setInProgress, { id, path, type: ls }) {
   const isFood = path.includes('food');
   const type = isFood ? 'meal' : 'cocktail';
   const response = await getRecipeAPI(type, id);
@@ -26,10 +27,10 @@ async function getRecipe(setRecipe, inProgress, setInProgress, { id, path }) {
     ingredients,
   });
 
-  if (!inProgress[id]) {
+  if (!inProgress[ls]?.[id]) {
     setInProgress((prev) => ({
       ...prev,
-      [`${type}s`]: {
+      [ls]: {
         [id]: ingredients.map((obj) => ({
           ...obj,
           checked: false,
@@ -43,7 +44,8 @@ async function getRecipe(setRecipe, inProgress, setInProgress, { id, path }) {
 function RecipeInProgress({ match: { params: { id }, path }, history }) {
   const [recipe, setRecipe] = useState();
   const [isButtonDisabled, setIsButtonDisabled] = useState();
-  const [type, setType] = useState('');
+  const [type, setType] = useState(path.includes('food') ? 'meals' : 'cocktails');
+
   const [
     inProgress,
     setInProgress,
@@ -51,14 +53,14 @@ function RecipeInProgress({ match: { params: { id }, path }, history }) {
   const [setIsDone] = useLocalStorage('doneRecipes', []);
 
   useEffect(() => {
-    getRecipe(setRecipe, inProgress, setInProgress, { id, path });
+    getRecipe(setRecipe, inProgress, setInProgress, { id, path, type });
     setType(path.includes('food') ? 'meals' : 'cocktails');
   }, [id, path]);
 
   useEffect(() => {
-    setIsButtonDisabled(inProgress[id]
-      && !inProgress[id].every(({ checked }) => checked));
-  }, [inProgress, id]);
+    setIsButtonDisabled(inProgress[type]?.[id]
+      && !inProgress[type]?.[id].every(({ checked }) => checked));
+  }, [inProgress, type, id]);
 
   const handleIngredientCheck = ({ target }) => {
     const { checked } = target;
@@ -91,7 +93,7 @@ function RecipeInProgress({ match: { params: { id }, path }, history }) {
     history.push('/done-recipes');
   };
 
-  return !recipe || !inProgress[id] ? null : (
+  return !recipe || !inProgress[type]?.[id] ? null : (
     <div>
       <ShareButton />
       <FavoriteButton
@@ -101,7 +103,7 @@ function RecipeInProgress({ match: { params: { id }, path }, history }) {
       <RecipeInfo
         recipe={ {
           ...recipe,
-          ingredients: inProgress[id],
+          ingredients: inProgress[type][id],
         } }
         handleChange={ handleIngredientCheck }
         checkedIngredients={ inProgress[id] }
