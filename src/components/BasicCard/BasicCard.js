@@ -37,7 +37,6 @@ function BasicCard(props) {
 BasicCard.propTypes = {
   pathname: PropTypes.string.isRequired,
   index: PropTypes.number.isRequired,
-  dataTestid: PropTypes.string.isRequired,
 };
 
 export default BasicCard;

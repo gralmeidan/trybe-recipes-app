@@ -7,6 +7,7 @@ import RecipeInfo from '../../components/RecipeInfo/RecipeInfo';
 import getIngredientAndMeasureList from '../../helpers/getIngredientAndMeasureList';
 import useLocalStorage from '../../hooks/useLocalStorage';
 
+// Tem q refatorar
 async function getRecipe(setRecipe, inProgress, setInProgress, { id, path }) {
   const isFood = path.includes('food');
   const type = isFood ? 'meal' : 'cocktail';

@@ -14,7 +14,10 @@ function Recipes({ location: { pathname } }) {
   useEffect(() => {
     const getRecipes = async () => {
       const db = pathname === '/foods' ? 'meal' : 'cocktail';
-      let response = await fetchRecipes(db, '', category);
+      let response = await fetchRecipes(db, {
+        option: 'name',
+        value: '',
+      }, category);
       setRecipes(response);
       response = await fetchCategories(db);
       setCategories(response);
