@@ -79,29 +79,34 @@ function RecipeInProgress({ match: { params: { id }, path }, history }) {
     }));
   };
 
-  return !recipe || !inProgress[type]?.[id] ? null : (
+  return !recipe ? null : (
     <div>
       <ShareButton />
       <FavoriteButton
         info={ recipe }
         id={ path.includes('food') ? recipe.idMeal : recipe.idDrink }
       />
-      <RecipeInfo
-        recipe={ {
-          ...recipe,
-          ingredients: inProgress[type][id],
-        } }
-        handleChange={ handleIngredientCheck }
-        checkedIngredients={ inProgress[id] }
-      />
-      <button
-        data-testid="finish-recipe-btn"
-        type="button"
-        disabled={ isButtonDisabled }
-        onClick={ () => history.push('/done-recipes') }
-      >
-        Finalizar
-      </button>
+      {!inProgress[type]?.[id] ? null
+        : (
+          <div>
+            <RecipeInfo
+              recipe={ {
+                ...recipe,
+                ingredients: inProgress[type][id],
+              } }
+              handleChange={ handleIngredientCheck }
+              checkedIngredients={ inProgress[id] }
+            />
+            <button
+              data-testid="finish-recipe-btn"
+              type="button"
+              disabled={ isButtonDisabled }
+              onClick={ () => history.push('/done-recipes') }
+            >
+              Finalizar
+            </button>
+          </div>
+        ) }
     </div>
   );
 }
