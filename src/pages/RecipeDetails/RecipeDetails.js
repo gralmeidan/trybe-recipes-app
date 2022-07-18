@@ -67,7 +67,7 @@ function RecipeDetails({ match: { params: { id }, path } }) {
           >
             <BasicCard
               className="recomendation-card-item"
-              pathname={ path }
+              pathname={ path.includes('foods') ? 'Drinks' : '/foods' }
               index={ index }
               { ...basicCard }
               dataTitle={ `${index}-recomendation-title` }
