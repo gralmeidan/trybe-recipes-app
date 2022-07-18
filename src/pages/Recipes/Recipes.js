@@ -2,7 +2,8 @@ import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import fetchRecipes, { fetchCategories } from '../../services/api';
 import BasicCard from '../../components/BasicCard/BasicCard';
-import Header from '../../components';
+import Header from '../../components/Header/Header';
+import Footer from '../../components/Footer/Footer';
 import Context from '../../context/Context';
 
 function Recipes({ location: { pathname }, history }) {
@@ -44,33 +45,37 @@ function Recipes({ location: { pathname }, history }) {
   };
 
   return (
-    <div>
+    <>
       <Header title={ headerTitle } />
-      { categories.length > 0 && categories.map(({ strCategory }, i) => (
-        <label
-          key={ i }
-          htmlFor={ `${strCategory}-category-filter` }
-          data-testid={ `${strCategory}-category-filter` }
-        >
-          {strCategory}
-          <input
-            onClick={ handleCategoryChange }
-            type="radio"
-            name="category"
-            value={ strCategory }
-            id={ `${strCategory}-category-filter` }
+      <div>
+        { categories.length > 0 && categories.map(({ strCategory }, i) => (
+          <label
+            key={ i }
+            htmlFor={ `${strCategory}-category-filter` }
+            data-testid={ `${strCategory}-category-filter` }
+          >
+            {strCategory}
+            <input
+              onClick={ handleCategoryChange }
+              type="radio"
+              name="category"
+              value={ strCategory }
+              id={ `${strCategory}-category-filter` }
+            />
+          </label>
+        ))}
+        { recipes.length > 0 && recipes.map((recipe, i) => (
+          <BasicCard
+            { ...recipe }
+            index={ i }
+            pathname={ pathname }
+            key={ i }
+            dataTitle={ `${i}-card-name` }
           />
-        </label>
-      ))}
-      { recipes.length > 0 && recipes.map((recipe, i) => (
-        <BasicCard
-          { ...recipe }
-          index={ i }
-          pathname={ pathname }
-          key={ i }
-        />
-      ))}
-    </div>
+        ))}
+      </div>
+      <Footer />
+    </>
   );
 }
 

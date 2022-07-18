@@ -1,5 +1,5 @@
 import React from 'react';
-import Header from '../../components';
+import Header from '../../components/Header/Header';
 
 function DoneRecipes() {
   // Título apenas para teste

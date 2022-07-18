@@ -1,15 +1,13 @@
 import React from 'react';
 import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event'
-
 import renderWithRouter from './helpers/renderWithRouter';
-
 import App from '../App';
-import Header from '../components'
 import mockFetch from './mocks/fetch';
 import { act } from 'react-dom/test-utils';
 import arrabiataQuery from './mocks/arrabiataQuery';
 import chickenQuery from './mocks/chickenQuery';
+import Header from '../components/Header/Header';
 
 describe('Verifica o Título', () => {
   test('Página /foods', () => {

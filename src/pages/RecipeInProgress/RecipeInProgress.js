@@ -39,15 +39,18 @@ async function getRecipe(setRecipe, inProgress, setInProgress, { id, path, type:
     }));
   }
 }
+//
 
 function RecipeInProgress({ match: { params: { id }, path }, history }) {
   const [recipe, setRecipe] = useState();
   const [isButtonDisabled, setIsButtonDisabled] = useState();
   const [type, setType] = useState(path.includes('food') ? 'meals' : 'cocktails');
+
   const [
     inProgress,
     setInProgress,
   ] = useLocalStorage('inProgressRecipes', {});
+  const [, setIsDone] = useLocalStorage('doneRecipes', []);
 
   useEffect(() => {
     getRecipe(setRecipe, inProgress, setInProgress, { id, path, type });
@@ -79,6 +82,17 @@ function RecipeInProgress({ match: { params: { id }, path }, history }) {
     }));
   };
 
+  const handleDoneRecipe = () => {
+    setIsDone((prev) => ([
+      ...prev,
+      {
+        recipe,
+      },
+    ]));
+
+    history.push('/done-recipes');
+  };
+
   return !recipe ? null : (
     <div>
       <ShareButton />
@@ -101,10 +115,11 @@ function RecipeInProgress({ match: { params: { id }, path }, history }) {
               data-testid="finish-recipe-btn"
               type="button"
               disabled={ isButtonDisabled }
-              onClick={ () => history.push('/done-recipes') }
+              onClick={ handleDoneRecipe }
             >
               Finalizar
             </button>
+
           </div>
         ) }
     </div>
