@@ -1,10 +1,23 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 import Context from './Context';
 
 function Provider({ children }) {
-  const contextValue = {};
+  const [search, setSearch] = useState({
+    type: '',
+    option: '',
+    value: '',
+  });
+
+  const handleSearch = (payload) => {
+    setSearch(payload);
+  };
+
+  const contextValue = {
+    search,
+    handleSearch,
+  };
 
   return (
     <Context.Provider value={ contextValue }>
@@ -14,7 +27,7 @@ function Provider({ children }) {
 }
 
 Provider.propTypes = {
-  children: PropTypes.element.isRequired,
+  children: PropTypes.node.isRequired,
 };
 
 export default Provider;
