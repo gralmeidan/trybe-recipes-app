@@ -8,6 +8,7 @@ import chickenQuery from "./chickenQuery";
 import arrabiataQuery from "./arrabiataQuery";
 import letterVQuery from './letterVQuery'
 import loremipsumQuery from './loremipsumQuery'
+import arrabiataById from './arrabiataById'
 
 export const MEALDB_REQUEST_URL = 'https://www.themealdb.com/api/json/v1/1/search.php?s='
 export const COCKTAILDB_REQUEST_URL = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s='
@@ -20,6 +21,7 @@ export const MEALDB_QUERYNAME_URL = 'https://www.themealdb.com/api/json/v1/1/sea
 export const COCKTAILDB_QUERYFIRST_URL = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?f=v'
 export const MEALDB_QUERYINGREDIENT_URL = 'https://www.themealdb.com/api/json/v1/1/filter.php?i=chicken'
 export const COCKTAILDB_QUERYBYNAME_URL = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=loremipsum'
+export const ARRABIATA_BYID_URL = 'https://www.themealdb.com/api/json/v1/1/lookup.php?i=52771'
 
 const mockFetch = (url) => Promise.resolve({
   json: () => {
@@ -46,6 +48,8 @@ const mockFetch = (url) => Promise.resolve({
         return Promise.resolve(chickenQuery)
       case COCKTAILDB_QUERYBYNAME_URL:
         return Promise.resolve(loremipsumQuery)
+      case ARRABIATA_BYID_URL:
+        return Promise.resolve(arrabiataById)
       default:
         break;
     }} 
