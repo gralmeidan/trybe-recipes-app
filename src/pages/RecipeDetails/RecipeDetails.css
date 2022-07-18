@@ -5,15 +5,15 @@ body {
 .recomendation {
   display: flex;
   flex-direction: row;
-  overflow-x: scroll;
   min-width: 100vw;
+  overflow-x: scroll;
   scroll-snap-type: x mandatory;
 }
 
 .recomendation-card {
+  margin: 1px;
   min-width: 50%;
   scroll-snap-align: start;
-  margin: 1px;
 }
 
 .start-recipe-btn {
