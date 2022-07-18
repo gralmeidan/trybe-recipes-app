@@ -26,8 +26,8 @@ function DetailedCard(props) {
           alt=""
           data-testid={ `${index}-horizontal-image` }
         />
+        <p data-testid={ `${index}-horizontal-name` }>{name}</p>
       </Link>
-      <p data-testid={ `${index}-horizontal-name` }>{name}</p>
       <p data-testid={ `${index}-horizontal-top-text` }>
         {type === 'food' ? `${nationality} - ${category}` : alcoholicOrNot}
       </p>
