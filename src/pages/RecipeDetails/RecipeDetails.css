@@ -1,0 +1,23 @@
+body {
+  scroll-snap-type: x mandatory;
+}
+
+.recomendation {
+  display: flex;
+  flex-direction: row;
+  overflow-x: scroll;
+  scroll-snap-type: x mandatory;
+  scroll-snap-type: x mandatory;
+  min-width: 100vw;
+}
+
+.recomendation-card {
+  scroll-snap-align: start;
+  min-width: 50%;
+  margin: 1px;
+}
+
+.start-recipe-btn {
+  position: fixed;
+  bottom: 0px;
+}

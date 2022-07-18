@@ -5,10 +5,16 @@ import getIngredientAndMeasureList from '../../helpers/getIngredientAndMeasureLi
 import getRecipeAPI from '../../services/getRecipeAPI';
 import getRecomendationApi from '../../services/getRecomendationsAPi';
 import BasicCard from '../../components/BasicCard/BasicCard';
+import './RecipeDetails.css';
+import useLocalStorage from '../../hooks/useLocalStorage';
+import FavoriteButton from '../../components/FavoriteButton';
+import ShareButton from '../../components/ShareButton';
 
-function RecipeDetails({ match: { params: { id }, path } }) {
+function RecipeDetails({ match: { params: { id }, path }, history }) {
   const [recipe, setRecipe] = useState();
   const [basicCards, setBasicCards] = useState();
+  const [inProgress] = useLocalStorage('inProgressRecipes', {});
+  const [isDone] = useLocalStorage('doneRecipes', []);
 
   useEffect(() => {
     const getRecipe = async () => {
@@ -25,9 +31,11 @@ function RecipeDetails({ match: { params: { id }, path } }) {
         strInstructions: instructions,
         [`str${strCategory}`]: category,
         strYoutube: video,
+        [`id${strType}`]: idRecipe,
       } = recipeObj;
 
       setRecipe({
+        ...recipeObj,
         isDetails: true,
         isFood: path.includes('foods'),
         title,
@@ -35,7 +43,9 @@ function RecipeDetails({ match: { params: { id }, path } }) {
         category,
         instructions,
         video,
-        ingredients });
+        ingredients,
+        idRecipe,
+      });
     };
     getRecipe();
   }, []);
@@ -50,29 +60,55 @@ function RecipeDetails({ match: { params: { id }, path } }) {
     getRecomendation();
   }, []);
 
+  const isRecipeDone = () => {
+    const type = path.includes('foods') ? 'meals' : 'cocktails';
+    if (inProgress[type]?.[id]) return 'inProgress';
+    if (isDone.find((recipeDone) => recipeDone.id === id)) {
+      return 'done';
+    }
+    return 'new';
+  };
+
   return (
     <section>
-      {recipe && <RecipeInfo recipe={ recipe } />}
-      <div>
+      {!recipe ? null : (
+        <div>
+          <RecipeInfo recipe={ recipe } />
+          <FavoriteButton
+            info={ recipe }
+          />
+          <ShareButton />
+        </div>
+      )}
+      <div className="recomendation">
         {basicCards && basicCards.map((basicCard, index) => (
-          <div key={ index } data-testid={ `${index}-recomendation-card` }>
+          <div
+            key={ index }
+            data-testid={ `${index}-recomendation-card` }
+            className="recomendation-card"
+          >
             <BasicCard
-              pathname={ path }
+              className="recomendation-card-item"
+              pathname={ path.includes('foods') ? 'Drinks' : '/foods' }
               index={ index }
               { ...basicCard }
+              dataTitle={ `${index}-recomendation-title` }
             />
           </div>
         ))}
       </div>
-      {/* {isDone ? (
+      {(isRecipeDone() === 'done') ? null : (
         <div className="start-recipe-btn">
           <button
             type="button"
+            className="start-recipe-btn"
             data-testid="start-recipe-btn"
+            onClick={ () => history.push(`/${path
+              .includes('food') ? 'foods' : 'drinks'}/${id}/in-progress`) }
           >
-            Start Recipe
+            { isRecipeDone() === 'inProgress' ? 'Continue Recipe' : 'Start Recipe'}
           </button>
-        </div>) : null } */}
+        </div>) }
     </section>
   );
 }
@@ -80,9 +116,12 @@ function RecipeDetails({ match: { params: { id }, path } }) {
 RecipeDetails.propTypes = {
   match: PropTypes.shape({
     params: PropTypes.shape({
-      id: PropTypes.number.isRequired,
+      id: PropTypes.string.isRequired,
     }).isRequired,
     path: PropTypes.string.isRequired,
+  }).isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
   }).isRequired,
 };
 

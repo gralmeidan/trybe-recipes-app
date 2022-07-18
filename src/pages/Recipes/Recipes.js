@@ -68,6 +68,7 @@ function Recipes({ location: { pathname }, history }) {
           index={ i }
           pathname={ pathname }
           key={ i }
+          dataTitle={ `${index}-card-name` }
         />
       ))}
     </div>
