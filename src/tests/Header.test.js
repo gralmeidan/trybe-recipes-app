@@ -5,7 +5,7 @@ import userEvent from '@testing-library/user-event'
 import renderWithRouter from './helpers/renderWithRouter';
 
 import App from '../App';
-import Header from '../components'
+import Header from '../components/Header/Header';
 
 describe('Verifica o Título', () => {
   test('Página /foods', () => {
