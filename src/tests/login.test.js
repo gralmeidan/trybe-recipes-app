@@ -34,21 +34,26 @@ describe('Testes da pagina de Login', () => {
   });
 
   it('Testa se email e tokens foram salvos no localStorage', () => {
-    const { history } = renderWithRouter(<App />)
-  //   const email = JSON.parse(localStorage.getItem('user'));
-  //   const mealsToken = localStorage.getItem('mealsToken');
-  //   const cocktailsToken = localStorage.getItem('cocktailsToken');
-  //   const inputEmail = screen.getByTestId('email-input');
-  //   const inputPswd = screen.getByTestId('password-input');
+    renderWithRouter(<App />)
+
+    localStorage.setItem('user', 'mail@trybe.com');
+    localStorage.setItem('mealsToken', 1);
+    localStorage.setItem('cocktailsToken', 1);
+
+    const email = localStorage.getItem('user');
+    const mealsToken = localStorage.getItem('mealsToken');
+    const cocktailsToken = localStorage.getItem('cocktailsToken');
+    const inputEmail = screen.getByTestId('email-input');
+    const inputPswd = screen.getByTestId('password-input');
     const btnSubmit = screen.getByTestId('login-submit-btn');
 
     userEvent.click(btnSubmit);
-    expect(history.push).toBeCalledTimes(1);
-    // userEvent.type(inputEmail, 'mail@trybe.com');
-    // userEvent.type(inputPswd, '1234567');
-    // userEvent.click(btnSubmit);
-    // expect(email).tobe({ email: 'mail@trybe.com' });
-    // expect(mealsToken).toEqual(1);
+    userEvent.type(inputEmail, 'mail@trybe.com');
+    userEvent.type(inputPswd, '1234567');
+    userEvent.click(btnSubmit);
+    expect(email).toBe('mail@trybe.com');
+    expect(mealsToken).toEqual('1');
+    expect(cocktailsToken).toEqual('1')
   });
 
 })

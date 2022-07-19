@@ -30,9 +30,9 @@ function Login({ history }) {
 
   const handleClick = () => {
     setEmail(email);
-    localStorage.setItem('user', /* JSON.stringify */({ email }));
-    localStorage.setItem('mealsToken', 11);
-    localStorage.setItem('cocktailsToken', 11);
+    localStorage.setItem('user', JSON.stringify({ email }));
+    localStorage.setItem('mealsToken', 1);
+    localStorage.setItem('cocktailsToken', 1);
     history.push('/foods');
   };
 
