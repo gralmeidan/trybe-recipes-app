@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import ShareButton from '../ShareButton';
 import FavoriteButton from '../FavoriteButton';
-
+//
 function DetailedCard(props) {
   const {
     type,
@@ -42,7 +42,7 @@ function DetailedCard(props) {
         />
       )}
       <div>
-        { tags && tags.map((tag, i) => (
+        { tags?.length && tags.map((tag, i) => (
           <span key={ i } data-testid={ `${index}-${tag}-horizontal-tag` }>{tag}</span>
         ))}
       </div>
