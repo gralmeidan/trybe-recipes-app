@@ -3,15 +3,8 @@ import { screen, waitFor } from "@testing-library/react";
 import userEvent from '@testing-library/user-event'
 import App from "../App";
 import renderWithRouter from "./helpers/renderWithRouter";
-// import mockFetch, {
-//   COCKTAILDB_REQUEST_URL,
-//   MEALDB_REQUEST_URL,
-// } from "./mocks/fetch";
-// import { cocktaildbCategories, mealdbCategories } from "./mocks/categoriesResponse";
-// import beefMeals from "../../cypress/mocks/beefMeals";
 import { act } from "react-dom/test-utils";
-// import mealdbResponse from "./mocks/mealdbResponse";
-// import cocktaildbResponse from "./mocks/cocktaildbResponse";
+
 
 describe("Testa a tela de receitas", () => {  
   const recipes = [
