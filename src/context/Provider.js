@@ -1,10 +1,27 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 import Context from './Context';
+import useLocalStorage from '../hooks/useLocalStorage';
 
 function Provider({ children }) {
-  const contextValue = {};
+  const [search, setSearch] = useState({
+    option: 'name',
+    value: '',
+  });
+
+  const handleSearch = (payload) => {
+    setSearch(payload);
+  };
+
+  const [favorites, setFavorites] = useLocalStorage('favoriteRecipes', []);
+
+  const contextValue = {
+    search,
+    handleSearch,
+    favorites,
+    setFavorites,
+  };
 
   return (
     <Context.Provider value={ contextValue }>
@@ -14,7 +31,7 @@ function Provider({ children }) {
 }
 
 Provider.propTypes = {
-  children: PropTypes.element.isRequired,
+  children: PropTypes.node.isRequired,
 };
 
 export default Provider;

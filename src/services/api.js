@@ -1,14 +1,24 @@
+const getUrl = (type, { option, value }, category) => {
+  if (category && category !== 'All') return `https://www.the${type}db.com/api/json/v1/1/filter.php?c=${category}`;
+  switch (option) {
+  case 'name':
+    return `https://www.the${type}db.com/api/json/v1/1/search.php?s=${value}`;
+  case 'first-letter':
+    return `https://www.the${type}db.com/api/json/v1/1/search.php?f=${value}`;
+  case 'ingredient':
+    return `https://www.the${type}db.com/api/json/v1/1/filter.php?i=${value}`;
+  default:
+    throw new Error('Opção inválida provida para fetchRecipes');
+  }
+};
+
 const fetchRecipes = async (type, query, category) => {
-  const URL = !category || category === 'All'
-    ? `https://www.the${type}db.com/api/json/v1/1/search.php?s=${query}`
-    : `https://www.the${type}db.com/api/json/v1/1/filter.php?c=${category}`;
+  const URL = getUrl(type, query, category);
   const LIMIT = 12;
-  return fetch(URL)
-    .then((data) => data.json())
-    .then(
-      ({ [type === 'meal' ? 'meals' : 'drinks']: response }) => response.slice(0, LIMIT),
-    )
-    .catch(console.error);
+  const response = await fetch(URL)
+    .then((data) => (data.json()))
+    .then((data) => Object.values(data)[0]);
+  return response ? response.slice(0, LIMIT) : [];
 };
 
 export const fetchCategories = async (type) => {

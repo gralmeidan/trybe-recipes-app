@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-import SearchBar from './SearchBar';
+import SearchBar from '../Search/SearchBar';
+import SearchIcon from '../Search/SearchIcon';
 
 import profileIcon from '../../images/profileIcon.svg';
-import searchIcon from '../../images/searchIcon.svg';
 
 const Header = ({ title }) => {
   const [searchEnable, setSearchEnable] = useState(false);
+  const haveSearch = ['/foods', '/drinks'];
+  const location = useLocation();
 
   const handleSearch = () => {
     setSearchEnable(!searchEnable);
@@ -31,21 +33,8 @@ const Header = ({ title }) => {
             { title }
           </h1>
         </div>
-        <div id="header-search">
-          <button
-            type="button"
-            name="search-top-btn"
-            id="search-top-btn"
-            onClick={ handleSearch }
-            data-testid="search-top-btn"
-          >
-            <img
-              src={ searchIcon }
-              alt="Search Recipes"
-              data-testid="search-top-btn"
-            />
-          </button>
-        </div>
+        { haveSearch.includes(location.pathname)
+        && <SearchIcon handleSearch={ handleSearch } /> }
       </header>
       { searchEnable && <SearchBar /> }
     </>
@@ -53,11 +42,7 @@ const Header = ({ title }) => {
 };
 
 Header.propTypes = {
-  title: PropTypes.string,
-};
-
-Header.defaultProps = {
-  title: 'Teste',
+  title: PropTypes.string.isRequired,
 };
 
 export default Header;
