@@ -10,6 +10,14 @@ function DoneRecipes() {
       <Header title={ headerTitle } />
       <main id="donerecipes-page">
         <h2>DoneRecipes</h2>
+        {/* <button
+          type="button"
+          data-testid="filter-by-all-btn"
+          onClick={ filte }
+        >
+          All
+
+        </button> */}
       </main>
     </>
   );

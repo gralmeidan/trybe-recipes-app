@@ -19,6 +19,7 @@ async function getRecipe(setRecipe, inProgress, setInProgress, { id, path, type:
     ...response,
     isDetails: false,
     isFood,
+    id: response[`id${strType}`],
     title: response[`str${strType}`],
     img: response[`str${strType}Thumb`],
     category: response[`str${strCategory}`],
@@ -50,7 +51,7 @@ function RecipeInProgress({ match: { params: { id }, path }, history }) {
     inProgress,
     setInProgress,
   ] = useLocalStorage('inProgressRecipes', {});
-  const [setIsDone] = useLocalStorage('doneRecipes', []);
+  const [, setIsDone] = useLocalStorage('doneRecipes', []);
 
   useEffect(() => {
     getRecipe(setRecipe, inProgress, setInProgress, { id, path, type });
@@ -86,7 +87,7 @@ function RecipeInProgress({ match: { params: { id }, path }, history }) {
     setIsDone((prev) => ([
       ...prev,
       {
-        recipe,
+        ...recipe,
       },
     ]));
 
@@ -112,7 +113,7 @@ function RecipeInProgress({ match: { params: { id }, path }, history }) {
         data-testid="finish-recipe-btn"
         type="button"
         disabled={ isButtonDisabled }
-        onClick={ () => handleDoneRecipe }
+        onClick={ () => handleDoneRecipe() }
       >
         Finalizar
       </button>
