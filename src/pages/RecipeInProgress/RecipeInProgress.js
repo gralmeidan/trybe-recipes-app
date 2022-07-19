@@ -40,6 +40,21 @@ async function getRecipe(setRecipe, inProgress, setInProgress, { id, path, type:
     }));
   }
 }
+
+const getRecipeDone = (recipe, path) => {
+  const strType = path.includes('food') ? 'Meal' : 'Drink';
+  return ({
+    id: recipe[`id${strType}`],
+    type: path.includes('food') ? 'food' : 'drink',
+    nationality: recipe.strArea || '',
+    category: recipe.strCategory,
+    alcoholicOrNot: recipe.strAlcoholic || '',
+    name: recipe[`str${strType}`],
+    image: recipe[`str${strType}Thumb`],
+    doneDate: new Date() || '',
+    tags: recipe.strTags ? recipe.strTags.split(',') : [],
+  });
+};
 //
 
 function RecipeInProgress({ match: { params: { id }, path }, history }) {
@@ -84,10 +99,11 @@ function RecipeInProgress({ match: { params: { id }, path }, history }) {
   };
 
   const handleDoneRecipe = () => {
+    const recipeDone = getRecipeDone(recipe, path);
     setIsDone((prev) => ([
       ...prev,
       {
-        ...recipe,
+        ...recipeDone,
       },
     ]));
 
