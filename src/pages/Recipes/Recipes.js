@@ -20,7 +20,7 @@ function Recipes({ location: { pathname }, history }) {
       const db = pathname === '/foods' ? 'meal' : 'cocktail';
       let response = await fetchRecipes(db, search, category);
       setRecipes(response);
-      if (response.length === 1) {
+      if (response.length === 1 && !category) {
         const type = pathname === '/foods' ? 'Meal' : 'Drink';
         history.push(`${pathname}/${response[0][`id${type}`]}`);
       }
