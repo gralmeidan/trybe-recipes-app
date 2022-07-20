@@ -64,19 +64,22 @@ describe("Testa a tela de Details", () => {
     const btnStart = screen.getByTestId("start-recipe-btn");
     fireEvent.click(btnStart);
 
-    expect(history.location.pathname).toBe('/foods/52977/in-progress');
-
+    
     await waitFor(() => {
-      const ingredients = screen.getAllByTestId(/-ingredient-step$/i);
-      ingredients.forEach((ingredient) => 
-      userEvent.click(ingredient));
-
-      const btnFinish = screen.getByTestId("finish-recipe-btn");
-      userEvent.click(btnFinish);
-
-      history.push('/foods/52977');
-      expect(btnStart).not.toBeInTheDocument();
+      expect(history.location.pathname).toBe('/foods/52977/in-progress');
     }); 
+
+    const ingredients = screen.getAllByTestId(/-ingredient-step$/i);
+    ingredients.forEach((ingredient) => 
+    userEvent.click(ingredient));
+
+    const btnFinish = screen.getByTestId("finish-recipe-btn");
+    userEvent.click(btnFinish);
+
+    history.push('/foods/52977');
+     
+    expect( await screen.findByText(/Corba/i)).toBeInTheDocument();
+    expect(screen.queryByTestId("start-recipe-btn")).not.toBeInTheDocument();
   })
 
   it('testa se o btn não aparece quando a receita foi feita - drink', async () => {

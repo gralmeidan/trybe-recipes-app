@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
 import useLocalStorage from '../../hooks/useLocalStorage';
@@ -6,10 +7,15 @@ import useLocalStorage from '../../hooks/useLocalStorage';
 import Header from '../../components/Header/Header';
 import Footer from '../../components/Footer/Footer';
 
-function Profile() {
+function Profile({ history }) {
   // Título apenas para teste
   const headerTitle = 'Profile';
   const [user] = useLocalStorage('user', {});
+
+  const logout = () => {
+    localStorage.clear();
+    history.push('/');
+  };
 
   return (
     <>
@@ -42,6 +48,7 @@ function Profile() {
               type="button"
               id="profile-logout-btn"
               data-testid="profile-logout-btn"
+              onClick={ logout }
             >
               Logout
             </button>
@@ -52,5 +59,11 @@ function Profile() {
     </>
   );
 }
+
+Profile.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
+};
 
 export default Profile;

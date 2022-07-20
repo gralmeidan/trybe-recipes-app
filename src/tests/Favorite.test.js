@@ -1,5 +1,5 @@
 import React from "react";
-import { screen, waitFor } from "@testing-library/react";
+import { fireEvent, screen, waitFor } from "@testing-library/react";
 import userEvent from '@testing-library/user-event'
 import App from "../App";
 import renderWithRouter from "./helpers/renderWithRouter";
@@ -71,4 +71,42 @@ describe("Testa a tela de receitas", () => {
       expect(screen.getByText(name)).toBeInTheDocument()
     })
   });
+
+  // it("Se uma receita favorita some ao clicar no btn", async () => {
+  //   const { history } = renderWithRouter(<App />);
+  //   history.push("/favorite-recipes");
+    
+  //   const filterAll = screen.getByTestId('filter-by-all-btn');
+  //   const filterFood = screen.getByTestId('filter-by-food-btn');
+  //   // const filterDrink = screen.getByTestId('filter-by-drink-btn');
+  //   // const favorite = screen.getAllByTestId('favorite-btn');
+
+  //   const FILLED = 'blackHeartIcon'
+
+  //   let button;
+  //   await waitFor(() => {
+  //     button = screen.getAllByTestId('favorite-btn');
+  //   })
+
+  //   expect(button[0].firstChild.src).toMatch(new RegExp(FILLED, 'i'))
+
+  //   act(() => { userEvent.click(filterFood) })
+    
+  //   expect(screen.queryByText('A1')).not.toBeInTheDocument()
+
+  //   act(() => { userEvent.click(button) })
+
+  //   expect(screen.queryByText(recipes[0].name)).not.toBeInTheDocument()
+
+  //   // act(() => { userEvent.click(filterDrink) })
+
+  //   // expect(screen.queryByText(recipes[0].name)).not.toBeInTheDocument()
+
+  //   act(() => { userEvent.click(filterAll) })
+
+  //   expect(screen.getByText('A1')).toBeInTheDocument()
+  //   // recipes.forEach(({ name }) => {
+  //   //   expect(screen.getByText(name)).toBeInTheDocument()
+  //   // })
+  // });
 });

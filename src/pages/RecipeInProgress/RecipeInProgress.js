@@ -51,7 +51,7 @@ const getRecipeDone = (recipe, path) => {
     alcoholicOrNot: recipe.strAlcoholic || '',
     name: recipe[`str${strType}`],
     image: recipe[`str${strType}Thumb`],
-    doneDate: new Date() || '',
+    doneDate: new Date(),
     tags: recipe.strTags ? recipe.strTags.split(',') : [],
   });
 };
