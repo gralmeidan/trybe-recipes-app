@@ -162,33 +162,33 @@ describe("Testa a tela de receitas", () => {
     })
   })
 
-  // it('O botão de finalizar deve funcionar corretamente - drink', async () => {
-  //   const { history } = renderWithRouter(<App />);
-  //   localStorage.setItem('inProgressRecipes', '')
-  //   history.push("/drinks/17222/in-progress");
+  it('O botão de finalizar deve funcionar corretamente - drink', async () => {
+    const { history } = renderWithRouter(<App />);
+    localStorage.setItem('inProgressRecipes', '')
+    history.push("/drinks/15997/in-progress");
     
-  //   let ingredients;
-  //   await waitFor(() => {
-  //     expect(history.location.pathname).toBe('/drinks/17222/in-progress');
-  //     ingredients = screen.getAllByTestId(/-ingredient-step/i)
-  //   })
+    let ingredients;
+    await waitFor(() => {
+      expect(history.location.pathname).toBe('/drinks/15997/in-progress');
+      ingredients = screen.getAllByTestId(/-ingredient-step/i)
+    })
 
-  //   const button = screen.getByTestId('finish-recipe-btn')
+    const button = screen.getByTestId('finish-recipe-btn')
 
-  //   expect(button).toBeDisabled()
-  //   ingredients.forEach((el) => {
-  //     act(() => {
-  //       userEvent.click(el)
-  //     })
-  //   })
+    expect(button).toBeDisabled()
+    ingredients.forEach((el) => {
+      act(() => {
+        userEvent.click(el)
+      })
+    })
     
-  //   expect(button).toBeEnabled()
+    expect(button).toBeEnabled()
 
-  //   userEvent.click(button)
+    userEvent.click(button)
 
-  //   await waitFor(() => {
-  //     expect(history.location.pathname).toBe('/done-recipes')
-  //   })
-  // })
+    await waitFor(() => {
+      expect(history.location.pathname).toBe('/done-recipes')
+    })
+  })
 
 });
