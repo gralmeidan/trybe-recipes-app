@@ -49,22 +49,26 @@ function Recipes({ location: { pathname }, history }) {
       <Header title={ headerTitle } />
       <main className="header-space footer-space">
         <div>
-          { categories.length > 0 && categories.map(({ strCategory }, i) => (
-            <label
-              key={ i }
-              htmlFor={ `${strCategory}-category-filter` }
-              data-testid={ `${strCategory}-category-filter` }
-            >
-              {strCategory}
-              <input
-                onClick={ handleCategoryChange }
-                type="radio"
-                name="category"
-                value={ strCategory }
-                id={ `${strCategory}-category-filter` }
-              />
-            </label>
-          ))}
+          <form className="my-2 mx-3 btn btn-md border border-3 col-11 bg-light">
+            { categories.length > 0 && categories.map(({ strCategory }, i) => (
+              <label
+                key={ i }
+                htmlFor={ `${strCategory}-category-filter` }
+                data-testid={ `${strCategory}-category-filter` }
+                className="form-check form-check-inline"
+              >
+                <input
+                  onClick={ handleCategoryChange }
+                  type="radio"
+                  name="category"
+                  value={ strCategory }
+                  id={ `${strCategory}-category-filter` }
+                  className="form-check-input"
+                />
+                {strCategory}
+              </label>
+            ))}
+          </form>
           { recipes.length > 0 && recipes.map((recipe, i) => (
             <BasicCard
               { ...recipe }
