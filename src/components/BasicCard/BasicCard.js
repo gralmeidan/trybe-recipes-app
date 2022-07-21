@@ -14,7 +14,7 @@ function BasicCard(props) {
 
   return (
     <Link
-      className="recipe-card"
+      className="recipe-card card mb-3 mx-3 bg-light"
       data-testid={ `${index}-recipe-card` }
       style={ {
         display: 'flex',
@@ -22,13 +22,14 @@ function BasicCard(props) {
       to={ `${pathname}/${id}` }
     >
       <img
-        className="recipe-card-img"
+        className="recipe-card-img card-img-top img-thumbnail"
         data-testid={ `${index}-card-img` }
         src={ img }
         alt=""
         width={ 100 }
       />
       <p
+        className="card-title text-center mt-2"
         data-testid={ dataTitle }
       >
         {title}

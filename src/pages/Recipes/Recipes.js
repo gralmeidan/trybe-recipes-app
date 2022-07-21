@@ -47,33 +47,35 @@ function Recipes({ location: { pathname }, history }) {
   return (
     <>
       <Header title={ headerTitle } />
-      <div>
-        { categories.length > 0 && categories.map(({ strCategory }, i) => (
-          <label
-            key={ i }
-            htmlFor={ `${strCategory}-category-filter` }
-            data-testid={ `${strCategory}-category-filter` }
-          >
-            {strCategory}
-            <input
-              onClick={ handleCategoryChange }
-              type="radio"
-              name="category"
-              value={ strCategory }
-              id={ `${strCategory}-category-filter` }
+      <main className="header-space footer-space">
+        <div>
+          { categories.length > 0 && categories.map(({ strCategory }, i) => (
+            <label
+              key={ i }
+              htmlFor={ `${strCategory}-category-filter` }
+              data-testid={ `${strCategory}-category-filter` }
+            >
+              {strCategory}
+              <input
+                onClick={ handleCategoryChange }
+                type="radio"
+                name="category"
+                value={ strCategory }
+                id={ `${strCategory}-category-filter` }
+              />
+            </label>
+          ))}
+          { recipes.length > 0 && recipes.map((recipe, i) => (
+            <BasicCard
+              { ...recipe }
+              index={ i }
+              pathname={ pathname }
+              key={ i }
+              dataTitle={ `${i}-card-name` }
             />
-          </label>
-        ))}
-        { recipes.length > 0 && recipes.map((recipe, i) => (
-          <BasicCard
-            { ...recipe }
-            index={ i }
-            pathname={ pathname }
-            key={ i }
-            dataTitle={ `${i}-card-name` }
-          />
-        ))}
-      </div>
+          ))}
+        </div>
+      </main>
       <Footer />
     </>
   );
