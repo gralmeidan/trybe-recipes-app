@@ -63,7 +63,6 @@ function RecipeDetails({ match: { params: { id }, path }, history }) {
   const isRecipeDone = () => {
     const type = path.includes('foods') ? 'meals' : 'cocktails';
     if (isDone.find((recipeDone) => recipeDone.id === id)) {
-      console.log('done');
       return 'done';
     }
     if (inProgress[type]?.[id]) return 'inProgress';

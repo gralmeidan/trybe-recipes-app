@@ -1,7 +1,12 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-
-import { Form, FormGroup, InputGroup, Button } from 'react-bootstrap';
+import {
+  Form,
+  FormGroup,
+  InputGroup,
+  Button,
+  Container,
+} from 'react-bootstrap';
 
 import './login.css';
 
@@ -44,14 +49,14 @@ function Login({ history }) {
   const titleStyle = { fontSize: `${titleFontSize}px` };
 
   return (
-    <div className="container pt-3 login">
-      <div className="border border-primary rounded bg-light shadow mb-3">
+    <Container className="pt-3 login">
+      <Container className="border border-primary rounded bg-light shadow mb-5">
         <h1 className="text-center">
           <span style={ titleStyle }>&#129367;</span>
           Recipes
           <span style={ titleStyle }>&#127865;</span>
         </h1>
-      </div>
+      </Container>
       <Form className="border border-primary p-3 rounded bg-light shadow">
         <h2 className="text-center">Sign-In</h2>
         <FormGroup className="mb-3" controlId="email">
@@ -85,18 +90,17 @@ function Login({ history }) {
         <FormGroup className="d-grid gap-2" controlId="loginButton">
           <Button
             variant="primary"
-            size="lg"
             type="button"
             disabled={ isDisabled }
+            className="col-12"
             onClick={ handleClick }
             data-testid="login-submit-btn"
-            className="col-12"
           >
             Login
           </Button>
         </FormGroup>
       </Form>
-    </div>
+    </Container>
   );
 }
 
