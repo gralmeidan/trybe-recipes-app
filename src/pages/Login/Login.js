@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
+import { Form, FormGroup, InputGroup, Button } from 'react-bootstrap';
+
+import './login.css';
+
 function Login({ history }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -36,30 +40,61 @@ function Login({ history }) {
     history.push('/foods');
   };
 
+  const titleFontSize = 40;
+  const titleStyle = { fontSize: `${titleFontSize}px` };
+
   return (
-    <div>
-      <input
-        data-testid="email-input"
-        type="text"
-        placeholder="E-mail"
-        value={ email }
-        onChange={ handleEmail }
-      />
-      <input
-        data-testid="password-input"
-        type="password"
-        placeholder="password"
-        value={ password }
-        onChange={ handlePassword }
-      />
-      <button
-        data-testid="login-submit-btn"
-        type="submit"
-        disabled={ isDisabled }
-        onClick={ handleClick }
-      >
-        Login
-      </button>
+    <div className="container pt-3 login">
+      <div className="border border-secondary rounded shadow">
+        <h1 className="text-center fw-bold bg-white">
+          <span style={ titleStyle }>&#129367;</span>
+          Recipes
+          <span style={ titleStyle }>&#127865;</span>
+        </h1>
+      </div>
+      <Form className="border border-primary p-3 rounded bg-light shadow">
+        <h2 className="text-center">Sign-In</h2>
+        <FormGroup className="mb-3" controlId="email">
+          <Form.Label>E-mail</Form.Label>
+          <InputGroup>
+            <InputGroup.Text>@</InputGroup.Text>
+            <Form.Control
+              type="email"
+              placeholder="Enter E-mail"
+              value={ email }
+              onChange={ handleEmail }
+              data-testid="email-input"
+            />
+          </InputGroup>
+        </FormGroup>
+
+        <FormGroup className="mb-3" controlId="password">
+          <Form.Label>Password</Form.Label>
+          <InputGroup>
+            <InputGroup.Text>#</InputGroup.Text>
+            <Form.Control
+              type="password"
+              placeholder="Enter Password"
+              value={ password }
+              onChange={ handlePassword }
+              data-testid="password-input"
+            />
+          </InputGroup>
+        </FormGroup>
+
+        <FormGroup className="d-grid gap-2" controlId="loginButton">
+          <Button
+            variant="primary"
+            size="lg"
+            type="button"
+            disabled={ isDisabled }
+            onClick={ handleClick }
+            data-testid="login-submit-btn"
+          >
+            Login
+          </Button>
+        </FormGroup>
+      </Form>
     </div>
   );
 }
