@@ -25,7 +25,7 @@ function DoneRecipes() {
   return (
     <>
       <Header title={ headerTitle } />
-      <main id="donerecipes-page" className="header-space">
+      <main id="donerecipes-page">
         <form className="my-2 mx-3 btn btn-lg border border-3 col-11 bg-light">
           {options.map(({ title, name, value }) => (
             <div key={ name } className="form-check form-check-inline">

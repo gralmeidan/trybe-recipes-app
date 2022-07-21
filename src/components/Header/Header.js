@@ -19,7 +19,7 @@ const Header = ({ title }) => {
 
   return (
     <>
-      <Navbar bg="light" fixed="top" className="border-bottom border-warning">
+      <Navbar bg="light" className="border-bottom border-warning">
         <Nav className="me-auto">
           <Nav.Link href="/profile">
             <ProfileIcon />
@@ -37,25 +37,6 @@ const Header = ({ title }) => {
       </Navbar>
       { searchEnable && <SearchBar /> }
     </>
-  // <header>
-  //   <div id="header-profile">
-  //     <Link to="/profile">
-  //       <img
-  //         src={ profileIcon }
-  //         alt="Profile"
-  //         data-testid="profile-top-btn"
-  //       />
-  //     </Link>
-  //   </div>
-  //   <div id="header-title">
-  //     <h1 data-testid="page-title">
-  //       { title }
-  //     </h1>
-  //   </div>
-  //   { haveSearch.includes(location.pathname)
-  //   && <SearchIcon handleSearch={ handleSearch } /> }
-  // </header>
-  // { searchEnable && <SearchBar /> }
   );
 };
 

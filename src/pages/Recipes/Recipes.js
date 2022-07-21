@@ -47,7 +47,7 @@ function Recipes({ location: { pathname }, history }) {
   return (
     <>
       <Header title={ headerTitle } />
-      <main className="header-space footer-space">
+      <main className="footer-space">
         <div>
           <form className="my-2 mx-3 btn btn-md border border-3 col-11 bg-light">
             { categories.length > 0 && categories.map(({ strCategory }, i) => (

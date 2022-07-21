@@ -1,4 +1,5 @@
 import React, { useContext, useState } from 'react';
+import { Navbar, Form, Button } from 'react-bootstrap';
 import Context from '../../context/Context';
 import SearchOptions from './SearchOptions';
 
@@ -30,31 +31,30 @@ const SearchBar = () => {
   };
 
   return (
-    <div id="search">
-      <form onSubmit={ handleSubmit }>
-        <div>
-          <input
-            type="text"
-            id="search-input"
-            name="search-input"
-            value={ searchValue }
-            onChange={ handleChange }
-            data-testid="search-input"
-          />
-        </div>
-        <SearchOptions option={ searchRadio } handleChange={ handleChange } />
-        <div>
-          <button
-            type="submit"
-            id="exec-search-btn"
-            name="exec-search-btn"
-            data-testid="exec-search-btn"
-          >
-            Search
-          </button>
-        </div>
-      </form>
-    </div>
+    <Navbar className="flex-column">
+      <Form className="d-flex">
+        <Form.Control
+          type="text"
+          id="search-input"
+          name="search-input"
+          placeholder="Search"
+          value={ searchValue }
+          onChange={ handleChange }
+          data-testid="search-input"
+        />
+        <Button
+          variant="outline-warning"
+          id="exec-search-btn"
+          name="exec-search-btn"
+          className="ml-2"
+          onClick={ handleSubmit }
+          data-testid="exec-search-btn"
+        >
+          Search
+        </Button>
+      </Form>
+      <SearchOptions option={ searchRadio } handleChange={ handleChange } />
+    </Navbar>
   );
 };
 
