@@ -25,7 +25,7 @@ function DoneRecipes() {
   return (
     <>
       <Header title={ headerTitle } />
-      <main id="donerecipes-page">
+      <main id="donerecipes-page" className="header-space">
         <form>
           {options.map(({ name, value }) => (
             <label

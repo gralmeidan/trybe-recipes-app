@@ -66,3 +66,11 @@
     transform: rotate(-10deg);
   }
 }
+
+.header-space {
+  padding-top: 90px;
+}
+
+.footer-space {
+  padding-bottom: 82.61px;
+}
