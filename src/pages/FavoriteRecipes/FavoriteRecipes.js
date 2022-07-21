@@ -9,9 +9,9 @@ function FavoriteRecipes() {
   const { favorites } = useContext(Context);
 
   const options = [
-    { name: 'all', value: '' },
-    { name: 'food', value: 'food' },
-    { name: 'drink', value: 'drink' },
+    { title: 'All', name: 'all', value: '' },
+    { title: 'Food', name: 'food', value: 'food' },
+    { title: 'Drink', name: 'drink', value: 'drink' },
   ];
 
   const handleChange = ({ target: { value } }) => {
@@ -24,12 +24,13 @@ function FavoriteRecipes() {
     <>
       <Header title={ headerTitle } />
       <main id="favoriterecipes-page">
-        <form>
-          {options.map(({ name, value }) => (
+        <form className="my-2 mx-3 btn btn-lg border border-3 col-11">
+          {options.map(({ title, name, value }) => (
             <label
               key={ name }
               data-testid={ `filter-by-${name}-btn` }
               htmlFor={ `filter-by-${name}-btn` }
+              className="form-check form-check-inline"
             >
               <input
                 id={ `filter-by-${name}-btn` }
@@ -38,8 +39,9 @@ function FavoriteRecipes() {
                 checked={ filter === value }
                 value={ value }
                 onChange={ handleChange }
+                className="form-check-input"
               />
-              {name}
+              {title}
             </label>
           ))}
         </form>
