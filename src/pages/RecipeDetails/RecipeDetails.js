@@ -74,10 +74,12 @@ function RecipeDetails({ match: { params: { id }, path }, history }) {
       {!recipe ? null : (
         <div>
           <RecipeInfo recipe={ recipe } />
-          <FavoriteButton
-            info={ recipe }
-          />
-          <ShareButton />
+          <div className="d-flex justify-content-between m-3">
+            <FavoriteButton
+              info={ recipe }
+            />
+            <ShareButton />
+          </div>
         </div>
       )}
       <div className="recomendation">
