@@ -47,7 +47,7 @@ function Recipes({ location: { pathname }, history }) {
   return (
     <>
       <Header title={ headerTitle } />
-      <main className="header-space footer-space">
+      <main className="footer-space">
         <div>
           { categories.length > 0 && categories.map(({ strCategory }, i) => (
             <label
