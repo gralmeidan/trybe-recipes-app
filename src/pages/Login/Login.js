@@ -45,8 +45,8 @@ function Login({ history }) {
 
   return (
     <div className="container pt-3 login">
-      <div className="border border-secondary rounded shadow">
-        <h1 className="text-center fw-bold bg-white">
+      <div className="border border-primary rounded bg-light shadow mb-3">
+        <h1 className="text-center">
           <span style={ titleStyle }>&#129367;</span>
           Recipes
           <span style={ titleStyle }>&#127865;</span>
