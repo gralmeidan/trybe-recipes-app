@@ -1,24 +1,34 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import './RecipeInfo.css';
+import ListGroup from 'react-bootstrap/ListGroup';
 
 function RecipeInfo({ recipe, handleChange }) {
   const { isDetails, isFood, img,
     title, category, instructions, ingredients, video } = recipe;
   return (
-    <div className="recipeInfos">
-      <img src={ img } alt="recipePhoto" data-testid="recipe-photo" />
-      <h2 data-testid="recipe-title">
+    <div className="recipeInfos m-3">
+      <img
+        src={ img }
+        className="card-img-top img-thumbnail"
+        alt="recipePhoto"
+        data-testid="recipe-photo"
+      />
+      <h2 data-testid="recipe-title" className="ricipe-title">
         {title}
       </h2>
-      <span data-testid="recipe-category">
+      <p data-testid="recipe-category" className="recipe-category">
         {category}
-      </span>
+      </p>
 
       {isDetails ? (
         ingredients.map((ingredient, index) => (
-          <p key={ index } data-testid={ `${index}-ingredient-name-and-measure` }>
-            {`${ingredient.measure} ${ingredient.ingredient}`}
-          </p>))) : (
+          <ListGroup key={ index }>
+            <ListGroup.Item data-testid={ `${index}-ingredient-name-and-measure` }>
+              {`${ingredient.measure} ${ingredient.ingredient}`}
+            </ListGroup.Item>
+          </ListGroup>
+        ))) : (
         ingredients.map((ingredient, index) => (
           <label
             key={ index }
@@ -37,17 +47,23 @@ function RecipeInfo({ recipe, handleChange }) {
           </label>
         )))}
 
-      <p data-testid="instructions">{instructions}</p>
+      <p
+        data-testid="instructions"
+        className="text-justify"
+      >
+        {instructions}
+      </p>
       {isFood ? (
         <div
           data-testid="video"
-          className="ratio ratio-16x9"
+          className="ratio"
         >
           <iframe
             title="youtube video"
             src={ video.replace('watch?v=', 'embed/') }
             frameBorder="0"
             allowFullScreen
+            width="100%"
           />
         </div>) : null}
     </div>
