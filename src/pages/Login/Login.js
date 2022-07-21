@@ -90,6 +90,7 @@ function Login({ history }) {
             disabled={ isDisabled }
             onClick={ handleClick }
             data-testid="login-submit-btn"
+            className="col-12"
           >
             Login
           </Button>

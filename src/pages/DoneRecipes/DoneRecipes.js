@@ -10,9 +10,9 @@ function DoneRecipes() {
   const [isDone] = useLocalStorage('doneRecipes', []);
 
   const options = [
-    { name: 'all', value: '' },
-    { name: 'food', value: 'food' },
-    { name: 'drink', value: 'drink' },
+    { title: 'All', name: 'all', value: '' },
+    { title: 'Food', name: 'food', value: 'food' },
+    { title: 'Drink', name: 'drink', value: 'drink' },
   ];
 
   const display = isDone?.length ? isDone
@@ -25,24 +25,27 @@ function DoneRecipes() {
   return (
     <>
       <Header title={ headerTitle } />
-      <main id="donerecipes-page">
-        <form>
-          {options.map(({ name, value }) => (
-            <label
-              key={ name }
-              data-testid={ `filter-by-${name}-btn` }
-              htmlFor={ `filter-by-${name}-btn` }
-            >
-              <input
-                id={ `filter-by-${name}-btn` }
-                type="radio"
-                name="filter"
-                checked={ filter === value }
-                value={ value }
-                onChange={ handleChange }
-              />
-              {name}
-            </label>
+      <main id="donerecipes-page" className="">
+        <form className="my-2 mx-3 btn btn-lg border border-3 col-11 bg-light">
+          {options.map(({ title, name, value }) => (
+            <div key={ name } className="form-check form-check-inline">
+              <label
+                data-testid={ `filter-by-${name}-btn` }
+                htmlFor={ `filter-by-${name}-btn` }
+                className="form-check-label"
+              >
+                <input
+                  id={ `filter-by-${name}-btn` }
+                  type="radio"
+                  name="filter"
+                  checked={ filter === value }
+                  value={ value }
+                  onChange={ handleChange }
+                  className="form-check-input"
+                />
+                {title}
+              </label>
+            </div>
           ))}
         </form>
         <section>
