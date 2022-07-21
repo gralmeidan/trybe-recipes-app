@@ -18,33 +18,55 @@ function DetailedCard(props) {
     id,
   } = props;
   return (
-    <div>
+    <div className="card mb-3 mx-3 bg-light">
+      <h5
+        data-testid={ `${index}-horizontal-name` }
+        className="card-title text-center mt-2"
+      >
+        {name}
+      </h5>
       <Link to={ `/${type}s/${id}` }>
         <img
+          className="card-img-top img-thumbnail"
           width={ 100 }
           src={ image }
           alt=""
           data-testid={ `${index}-horizontal-image` }
         />
-        <p data-testid={ `${index}-horizontal-name` }>{name}</p>
       </Link>
-      <p data-testid={ `${index}-horizontal-top-text` }>
-        {type === 'food' ? `${nationality} - ${category}` : alcoholicOrNot}
-      </p>
-      <ShareButton
-        dataTest={ `${index}-horizontal-share-btn` }
-        path={ `/${type}s/${id}` }
-      />
-      { doneDate ? <p data-testid={ `${index}-horizontal-done-date` }>{doneDate}</p> : (
-        <FavoriteButton
-          dataTest={ `${index}-horizontal-favorite-btn` }
-          info={ props }
-        />
-      )}
-      <div>
-        { tags?.length && tags.map((tag, i) => (
-          <span key={ i } data-testid={ `${index}-${tag}-horizontal-tag` }>{tag}</span>
-        ))}
+      <div className="card-body">
+        <div className="d-flex justify-content-between">
+          <ShareButton
+            className="p-2"
+            dataTest={ `${index}-horizontal-share-btn` }
+            path={ `/${type}s/${id}` }
+          />
+          { doneDate ? (
+            <p
+              className="pt-4"
+              data-testid={ `${index}-horizontal-done-date` }
+            >
+              {doneDate.split('T')[0]}
+
+            </p>)
+            : (
+              <FavoriteButton
+                className="p-2"
+                dataTest={ `${index}-horizontal-favorite-btn` }
+                info={ props }
+              />
+            )}
+        </div>
+        <div className="d-flex justify-content-between mt-2">
+          <p
+            data-testid={ `${index}-horizontal-top-text` }
+          >
+            {type === 'food' ? `${nationality} - ${category}` : alcoholicOrNot}
+          </p>
+          { tags?.length ? tags.map((tag, i) => (
+            <span key={ i } data-testid={ `${index}-${tag}-horizontal-tag` }>{tag}</span>
+          )) : null}
+        </div>
       </div>
     </div>
   );

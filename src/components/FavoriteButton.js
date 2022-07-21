@@ -39,6 +39,7 @@ function FavoriteButton({ info, dataTest }) {
       onClick={ handleClick }
       src={ favorited ? Fill : Outline }
       alt="Share"
+      className="btn btn-lg border border-3"
     >
       <img src={ favorited ? Fill : Outline } alt="Share" />
     </button>
