@@ -54,20 +54,18 @@ function RecipeInfo({ recipe, handleChange }) {
         {instructions}
       </p>
       {isFood ? (
-        <video
-          src={ video }
+        <div
           data-testid="video"
-          controls
+          className="ratio"
         >
-          <track
-            default
-            kind="captions"
-            srcLang="en"
-            src="/media/examples/friday.vtt"
+          <iframe
+            title="youtube video"
+            src={ video.replace('watch?v=', 'embed/') }
+            frameBorder="0"
+            allowFullScreen
+            width="100%"
           />
-        </video>
-      ) : null}
-
+        </div>) : null}
     </div>
   );
 }
