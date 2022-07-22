@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from 'react';
+
 import PropTypes from 'prop-types';
-import { Button } from 'react-bootstrap';
-import RecipeInfo from '../../components/RecipeInfo/RecipeInfo';
 import getIngredientAndMeasureList from '../../helpers/getIngredientAndMeasureList';
-import getRecipeAPI from '../../services/getRecipeAPI';
 import getRecomendationApi from '../../services/getRecomendationsAPi';
-import BasicCard from '../../components/BasicCard/BasicCard';
-import './RecipeDetails.css';
+import getRecipeAPI from '../../services/getRecipeAPI';
 import useLocalStorage from '../../hooks/useLocalStorage';
+
+import RecipeInfo from '../../components/RecipeInfo/RecipeInfo';
+
+import BasicCard from '../../components/BasicCard/BasicCard';
 import FavoriteButton from '../../components/FavoriteButton';
 import ShareButton from '../../components/ShareButton';
+import './RecipeDetails.css';
 
 function RecipeDetails({ match: { params: { id }, path }, history }) {
   const [recipe, setRecipe] = useState();
@@ -49,7 +51,7 @@ function RecipeDetails({ match: { params: { id }, path }, history }) {
       });
     };
     getRecipe();
-  }, [path]);
+  }, [id, path]);
 
   useEffect(() => {
     const getRecomendation = async () => {
@@ -88,7 +90,7 @@ function RecipeDetails({ match: { params: { id }, path }, history }) {
           <div
             key={ index }
             data-testid={ `${index}-recomendation-card` }
-            className="recomendation-card"
+            className="recomendation-card ml-3"
           >
             <BasicCard
               className="recomendation-card-item"

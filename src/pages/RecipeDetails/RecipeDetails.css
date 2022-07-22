@@ -12,10 +12,9 @@ body {
 
 .recomendation-card {
   margin: 1px;
-  min-width: 50%;
   scroll-snap-align: start;
 }
 
 .start-recipe-btn {
-  text-align: center
+  text-align: center;
 }
