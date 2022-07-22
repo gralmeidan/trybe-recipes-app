@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Button } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import getRecipeAPI from '../../services/getRecipeAPI';
 import ShareButton from '../../components/ShareButton';
@@ -112,11 +113,13 @@ function RecipeInProgress({ match: { params: { id }, path }, history }) {
 
   return !recipe ? null : (
     <div>
-      <ShareButton />
-      <FavoriteButton
-        info={ recipe }
-        id={ path.includes('food') ? recipe.idMeal : recipe.idDrink }
-      />
+      <div className="d-flex justify-content-between m-3">
+        <ShareButton />
+        <FavoriteButton
+          info={ recipe }
+          id={ path.includes('food') ? recipe.idMeal : recipe.idDrink }
+        />
+      </div>
       {!inProgress[type]?.[id] ? null
         : (
           <div>
@@ -128,14 +131,16 @@ function RecipeInProgress({ match: { params: { id }, path }, history }) {
               handleChange={ handleIngredientCheck }
               checkedIngredients={ inProgress[id] }
             />
-            <button
+            <Button
+              variant="outline-success"
               data-testid="finish-recipe-btn"
               type="button"
               disabled={ isButtonDisabled }
               onClick={ handleDoneRecipe }
+              className="col-11 mb-3 ml-3"
             >
               Finalizar
-            </button>
+            </Button>
 
           </div>
         ) }

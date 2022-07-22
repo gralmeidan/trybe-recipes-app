@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Button } from 'react-bootstrap';
-import PropTypes from 'prop-types';
 
+import PropTypes from 'prop-types';
 import getIngredientAndMeasureList from '../../helpers/getIngredientAndMeasureList';
 import getRecomendationApi from '../../services/getRecomendationsAPi';
 import getRecipeAPI from '../../services/getRecipeAPI';

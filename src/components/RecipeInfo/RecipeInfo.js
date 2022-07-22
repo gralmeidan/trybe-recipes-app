@@ -30,21 +30,24 @@ function RecipeInfo({ recipe, handleChange }) {
           </ListGroup>
         ))) : (
         ingredients.map((ingredient, index) => (
-          <label
-            key={ index }
-            htmlFor={ ingredient.ingredient }
-            data-testid={ `${index}-ingredient-step` }
-          >
-            <input
-              type="checkbox"
-              id={ ingredient.ingredient }
-              value={ ingredient.ingredient }
-              name="ingredientStep"
-              onChange={ handleChange }
-              checked={ ingredient.checked }
-            />
-            {`${ingredient.measure} ${ingredient.ingredient}`}
-          </label>
+          <div key={ index } className="form-check mb-3 mx-1">
+            <label
+              htmlFor={ ingredient.ingredient }
+              data-testid={ `${index}-ingredient-step` }
+              className="form-check-label"
+            >
+              <input
+                className="form-check-input"
+                type="checkbox"
+                id={ ingredient.ingredient }
+                value={ ingredient.ingredient }
+                name="ingredientStep"
+                onChange={ handleChange }
+                checked={ ingredient.checked }
+              />
+              {`${ingredient.measure} ${ingredient.ingredient}`}
+            </label>
+          </div>
         )))}
 
       <p
