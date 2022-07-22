@@ -1,15 +1,18 @@
 import React, { useState, useEffect } from 'react';
+import { Button } from 'react-bootstrap';
 import PropTypes from 'prop-types';
-import RecipeInfo from '../../components/RecipeInfo/RecipeInfo';
+
 import getIngredientAndMeasureList from '../../helpers/getIngredientAndMeasureList';
-import getRecipeAPI from '../../services/getRecipeAPI';
 import getRecomendationApi from '../../services/getRecomendationsAPi';
-import BasicCard from '../../components/BasicCard/BasicCard';
-import './RecipeDetails.css';
+import getRecipeAPI from '../../services/getRecipeAPI';
 import useLocalStorage from '../../hooks/useLocalStorage';
+
+import RecipeInfo from '../../components/RecipeInfo/RecipeInfo';
+
+import BasicCard from '../../components/BasicCard/BasicCard';
 import FavoriteButton from '../../components/FavoriteButton';
 import ShareButton from '../../components/ShareButton';
-import { Button } from 'react-bootstrap';
+import './RecipeDetails.css';
 
 function RecipeDetails({ match: { params: { id }, path }, history }) {
   const [recipe, setRecipe] = useState();
@@ -49,7 +52,7 @@ function RecipeDetails({ match: { params: { id }, path }, history }) {
       });
     };
     getRecipe();
-  }, []);
+  }, [id, path]);
 
   useEffect(() => {
     const getRecomendation = async () => {
@@ -59,7 +62,7 @@ function RecipeDetails({ match: { params: { id }, path }, history }) {
       setBasicCards(recomendation);
     };
     getRecomendation();
-  }, []);
+  }, [path]);
 
   const isRecipeDone = () => {
     const type = path.includes('foods') ? 'meals' : 'cocktails';
@@ -92,7 +95,7 @@ function RecipeDetails({ match: { params: { id }, path }, history }) {
           >
             <BasicCard
               className="recomendation-card-item"
-              pathname={ path.includes('foods') ? 'Drinks' : '/foods' }
+              pathname={ path.includes('foods') ? '/drinks' : '/foods' }
               index={ index }
               { ...basicCard }
               dataTitle={ `${index}-recomendation-title` }
