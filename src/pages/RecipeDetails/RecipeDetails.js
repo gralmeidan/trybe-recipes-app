@@ -91,7 +91,7 @@ function RecipeDetails({ match: { params: { id }, path }, history }) {
           <div
             key={ index }
             data-testid={ `${index}-recomendation-card` }
-            className="recomendation-card"
+            className="recomendation-card ml-3"
           >
             <BasicCard
               className="recomendation-card-item"

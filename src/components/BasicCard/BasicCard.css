@@ -1,7 +1,7 @@
 .recipe-card {
   display: flex;
   flex-direction: column;
-  width: 50vw;
+  /* width: 50vw; */
 }
 
 .recipe-card-img {

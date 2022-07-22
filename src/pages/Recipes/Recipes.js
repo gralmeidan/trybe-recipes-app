@@ -51,7 +51,7 @@ function Recipes({ location: { pathname }, history }) {
       <Header title={ headerTitle } />
       <main className="footer-space">
         <div>
-          <form className="my-2 mx-3 btn btn-md border border-3 col-11 bg-light">
+          <form className="my-2 mx-3 btn btn-md border border-3 col-auto bg-light">
             { categories.length > 0 && categories.map(({ strCategory }, i) => (
               <label
                 key={ i }
@@ -71,15 +71,17 @@ function Recipes({ location: { pathname }, history }) {
               </label>
             ))}
           </form>
-          { recipes.length > 0 && recipes.map((recipe, i) => (
-            <BasicCard
-              { ...recipe }
-              index={ i }
-              pathname={ pathname }
-              key={ i }
-              dataTitle={ `${i}-card-name` }
-            />
-          ))}
+          <div className="mx-3">
+            { recipes.length > 0 && recipes.map((recipe, i) => (
+              <BasicCard
+                { ...recipe }
+                index={ i }
+                pathname={ pathname }
+                key={ i }
+                dataTitle={ `${i}-card-name` }
+              />
+            ))}
+          </div>
         </div>
       </main>
       <Footer />
