@@ -29,7 +29,7 @@ function BasicCard(props) {
         width={ 100 }
       />
       <p
-        className="card-title text-center mt-2 text-dark"
+        className="card-title text-center mt-2 col-12 text-dark"
         data-testid={ dataTitle }
       >
         {title}
