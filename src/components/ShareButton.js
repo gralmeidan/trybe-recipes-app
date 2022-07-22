@@ -9,8 +9,7 @@ function ShareButton({ dataTest, path }) {
   const { pathname } = useLocation();
 
   const handleClick = () => {
-    copy(`http://localhost:3000${path || pathname.replace('/in-progress', '')}`);
-    // setCopied(true);
+    copy(`${window.location.host}${path || pathname.replace('/in-progress', '')}`);
     global.alert('Link copied!');
   };
 
