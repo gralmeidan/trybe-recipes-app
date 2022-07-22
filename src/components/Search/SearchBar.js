@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { Navbar, Form, Button } from 'react-bootstrap';
+import { Container, Form, Button } from 'react-bootstrap';
 import Context from '../../context/Context';
 import SearchOptions from './SearchOptions';
 
@@ -31,7 +31,7 @@ const SearchBar = () => {
   };
 
   return (
-    <Navbar className="flex-column">
+    <Container className="mt-3 flex-column">
       <Form className="d-flex">
         <Form.Control
           type="text"
@@ -43,7 +43,7 @@ const SearchBar = () => {
           data-testid="search-input"
         />
         <Button
-          variant="outline-warning"
+          variant="outline-success"
           id="exec-search-btn"
           name="exec-search-btn"
           className="ml-2"
@@ -54,7 +54,7 @@ const SearchBar = () => {
         </Button>
       </Form>
       <SearchOptions option={ searchRadio } handleChange={ handleChange } />
-    </Navbar>
+    </Container>
   );
 };
 

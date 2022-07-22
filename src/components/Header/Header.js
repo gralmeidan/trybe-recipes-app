@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import { Container, Nav, Navbar, Form } from 'react-bootstrap';
+import { Nav, Navbar } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 
 import Title from './Title';
@@ -19,21 +19,17 @@ const Header = ({ title }) => {
 
   return (
     <>
-      <Navbar bg="light" className="border-bottom border-warning">
-        <Nav className="me-auto">
-          <Nav.Link href="/profile">
-            <ProfileIcon />
-          </Nav.Link>
+      <Navbar bg="light" className="border-bottom border-success bg-gradient">
+        <Nav className="col-3 justify-content-start">
+          <ProfileIcon />
         </Nav>
-        <Container className="d-flex flex-column">
-          <Navbar.Text>
-            <Title title={ title } />
-          </Navbar.Text>
-        </Container>
-        <Form className="d-flex">
+        <Nav className="col-6 justify-content-center">
+          <Title title={ title } />
+        </Nav>
+        <Nav className="col-3 justify-content-end">
           { haveSearch.includes(location.pathname)
           && <SearchIcon handleSearch={ handleSearch } /> }
-        </Form>
+        </Nav>
       </Navbar>
       { searchEnable && <SearchBar /> }
     </>
