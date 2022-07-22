@@ -17,6 +17,5 @@ body {
 }
 
 .start-recipe-btn {
-  bottom: 0;
-  position: fixed;
+  text-align: center
 }
