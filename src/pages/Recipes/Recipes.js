@@ -33,7 +33,7 @@ function Recipes({ location: { pathname }, history }) {
       setCategories(response);
     };
     getRecipes();
-  }, [pathname, category, search]);
+  }, [pathname, history, category, search]);
 
   const handleCategoryChange = ({ target }) => {
     const { value } = target;

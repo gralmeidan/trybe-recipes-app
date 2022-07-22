@@ -71,7 +71,7 @@ function RecipeInProgress({ match: { params: { id }, path }, history }) {
   useEffect(() => {
     getRecipe(setRecipe, inProgress, setInProgress, { id, path, type });
     setType(path.includes('food') ? 'meals' : 'cocktails');
-  }, [id, path]);
+  }, [id, path, inProgress, setInProgress, type]);
 
   useEffect(() => {
     setIsButtonDisabled(inProgress[type]?.[id]
