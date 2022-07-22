@@ -1,10 +1,12 @@
 import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+
+import Context from '../../context/Context';
 import fetchRecipes, { fetchCategories } from '../../services/api';
-import BasicCard from '../../components/BasicCard/BasicCard';
+
 import Header from '../../components/Header/Header';
 import Footer from '../../components/Footer/Footer';
-import Context from '../../context/Context';
+import BasicCard from '../../components/BasicCard/BasicCard';
 
 function Recipes({ location: { pathname }, history }) {
   const [recipes, setRecipes] = useState([]);

@@ -50,14 +50,14 @@ function Login({ history }) {
 
   return (
     <Container className="pt-3 login">
-      <Container className="border border-primary rounded bg-light shadow mb-5">
+      <Container className="border border-success rounded bg-light shadow mb-5">
         <h1 className="text-center">
           <span style={ titleStyle }>&#129367;</span>
           Recipes
           <span style={ titleStyle }>&#127865;</span>
         </h1>
       </Container>
-      <Form className="border border-primary p-3 rounded bg-light shadow">
+      <Form className="border border-success p-3 rounded bg-light shadow">
         <h2 className="text-center">Sign-In</h2>
         <FormGroup className="mb-3" controlId="email">
           <Form.Label>E-mail</Form.Label>
@@ -65,7 +65,7 @@ function Login({ history }) {
             <InputGroup.Text>@</InputGroup.Text>
             <Form.Control
               type="email"
-              placeholder="Enter E-mail"
+              placeholder="Enter Your E-mail"
               value={ email }
               onChange={ handleEmail }
               data-testid="email-input"
@@ -79,7 +79,7 @@ function Login({ history }) {
             <InputGroup.Text>#</InputGroup.Text>
             <Form.Control
               type="password"
-              placeholder="Enter Password"
+              placeholder="Enter Your Password"
               value={ password }
               onChange={ handlePassword }
               data-testid="password-input"
@@ -89,7 +89,7 @@ function Login({ history }) {
 
         <FormGroup className="d-grid gap-2" controlId="loginButton">
           <Button
-            variant="primary"
+            variant="success"
             type="button"
             disabled={ isDisabled }
             className="col-12"
