@@ -9,6 +9,7 @@ import './RecipeDetails.css';
 import useLocalStorage from '../../hooks/useLocalStorage';
 import FavoriteButton from '../../components/FavoriteButton';
 import ShareButton from '../../components/ShareButton';
+import { Button } from 'react-bootstrap';
 
 function RecipeDetails({ match: { params: { id }, path }, history }) {
   const [recipe, setRecipe] = useState();
@@ -101,15 +102,16 @@ function RecipeDetails({ match: { params: { id }, path }, history }) {
       </div>
       {(isRecipeDone() === 'done') ? null : (
         <div className="start-recipe-btn">
-          <button
+          <Button
             type="button"
-            className="start-recipe-btn"
+            variant="outline-warning"
+            className="start-recipe-btn col-11 mb-3"
             data-testid="start-recipe-btn"
             onClick={ () => history.push(`/${path
               .includes('food') ? 'foods' : 'drinks'}/${id}/in-progress`) }
           >
             { isRecipeDone() === 'inProgress' ? 'Continue Recipe' : 'Start Recipe'}
-          </button>
+          </Button>
         </div>) }
     </section>
   );
