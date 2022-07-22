@@ -12,7 +12,6 @@ body {
 
 .recomendation-card {
   margin: 1px;
-  /* min-width: 50%; */
   scroll-snap-align: start;
 }
 
