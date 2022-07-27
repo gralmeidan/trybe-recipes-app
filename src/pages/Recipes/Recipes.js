@@ -1,9 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-
 import Context from '../../context/Context';
 import fetchRecipes, { fetchCategories } from '../../services/api';
-
 import Header from '../../components/Header/Header';
 import Footer from '../../components/Footer/Footer';
 import BasicCard from '../../components/BasicCard/BasicCard';

@@ -1,14 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Button } from 'react-bootstrap';
-
 import PropTypes from 'prop-types';
 import getIngredientAndMeasureList from '../../helpers/getIngredientAndMeasureList';
 import getRecomendationApi from '../../services/getRecomendationsAPi';
 import getRecipeAPI from '../../services/getRecipeAPI';
 import useLocalStorage from '../../hooks/useLocalStorage';
-
 import RecipeInfo from '../../components/RecipeInfo/RecipeInfo';
-
 import BasicCard from '../../components/BasicCard/BasicCard';
 import FavoriteButton from '../../components/FavoriteButton';
 import ShareButton from '../../components/ShareButton';

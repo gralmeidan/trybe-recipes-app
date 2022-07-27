@@ -15,6 +15,7 @@
     "react-router-dom": "^5.3.3",
     "react-scripts": "^5.0.1"
   },
+  "homepage": "https://gralmeidan.github.io/trybe-recipes-app",
   "scripts": {
     "cy": "cypress run",
     "cy:open": "cypress open",
@@ -24,7 +25,9 @@
     "test-coverage": "react-scripts test --coverage --watchAll=false",
     "eject": "react-scripts eject",
     "lint": "eslint --no-inline-config --no-error-on-unmatched-pattern -c .eslintrc.json . --ext .js,.jsx",
-    "lint:styles": "npx stylelint '**/*.css'"
+    "lint:styles": "npx stylelint '**/*.css'",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -53,6 +56,7 @@
     "eslint-plugin-react-hooks": "^4.2.0",
     "eslint-plugin-sonarjs": "^0.13.0",
     "fs-extra": "^9.0.1",
+    "gh-pages": "^4.0.0",
     "mocha": "^8.0.1",
     "mochawesome": "^6.1.1",
     "mochawesome-merge": "^4.1.0",
