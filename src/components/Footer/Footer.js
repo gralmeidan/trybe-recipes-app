@@ -15,7 +15,7 @@ function Footer() {
     >
       <Container>
         <Nav className="me-auto">
-          <Nav.Link href="/drinks">
+          <Nav.Link href="/#/drinks">
             <img
               src={ drinkIcon }
               alt="Drinks"
@@ -24,7 +24,7 @@ function Footer() {
           </Nav.Link>
         </Nav>
         <Nav className="d-flex">
-          <Nav.Link href="/foods">
+          <Nav.Link href="/#/foods">
             <img
               src={ mealIcon }
               alt="Foods"
