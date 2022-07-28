@@ -1,16 +1,17 @@
 import React from 'react';
-import { Nav, Image } from 'react-bootstrap';
+import { Image } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
 import profileIcon from '../../images/profileIcon.svg';
 
 const ProfileIcon = () => (
-  <Nav.Link href="/#/profile">
+  <Link to="/profile">
     <Image
       src={ profileIcon }
       alt="Profile"
       data-testid="profile-top-btn"
     />
-  </Nav.Link>
+  </Link>
 );
 
 export default ProfileIcon;
